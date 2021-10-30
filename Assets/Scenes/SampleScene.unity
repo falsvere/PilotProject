@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 1127462983}
   - component: {fileID: 1127462982}
   - component: {fileID: 1127462981}
+  - component: {fileID: 1127462985}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -255,13 +256,13 @@ CircleCollider2D:
   m_GameObject: {fileID: 1127462980}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 279684ce759dacb4fa2dddd537714350, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.012561525, y: 0.00089591683}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.4781698
 --- !u!212 &1127462983
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -302,7 +303,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e6d444c5e62e52842bbe53781178a347, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -312,7 +313,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!4 &1127462984
 Transform:
   m_ObjectHideFlags: 0
@@ -321,12 +322,28 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127462980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.460262, y: -2.0319388, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.57, y: 1.72, z: 0}
+  m_LocalScale: {x: 1.1173185, y: 1.1494253, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1127462985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127462980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe769f91bf11b76448760b1feb1efd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 12
+  speedInJump: 1
+  jumpForce: 10
+  rotation: 400
 --- !u!1 &1276069485
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,7 +389,7 @@ GameObject:
   - component: {fileID: 1341636341}
   - component: {fileID: 1341636340}
   m_Layer: 0
-  m_Name: Right Border
+  m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -401,7 +418,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1341636338}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 035803b772081cb4cae84167eecf31c1, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -510,7 +527,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1787983813}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: b16c004b3568f2c4b859a9aafd180080, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -590,7 +607,7 @@ GameObject:
   - component: {fileID: 2141691811}
   - component: {fileID: 2141691810}
   m_Layer: 0
-  m_Name: Left Border
+  m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -619,7 +636,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 2141691808}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 035803b772081cb4cae84167eecf31c1, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
