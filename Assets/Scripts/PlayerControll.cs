@@ -34,7 +34,6 @@ public class PlayerControll : MonoBehaviour
         float horizontalInput = Input.GetAxisRaw("Horizontal");
 
 
-        Debug.Log(playerRB.velocity.x);
         if (activateJump && horizontalInput == 0)
         {
             isOnFloor = false;
@@ -43,8 +42,11 @@ public class PlayerControll : MonoBehaviour
 
         } else if (horizontalInput != 0 && activateJump)
         {
+            Debug.Log("asdads");
             isOnFloor = false;
-            playerRB.AddForce(new Vector2(speedInJump * horizontalInput, jumpForce), ForceMode2D.Impulse);
+            playerRB.rotation *= 0f;
+            playerRB.velocity *= 0f;
+            playerRB.AddForce(new Vector2(horizontalInput * speedInJump/2.5f, jumpForce), ForceMode2D.Impulse);
             activateJump = false;
 
         }else if (horizontalInput != 0 && !activateJump)
@@ -60,7 +62,7 @@ public class PlayerControll : MonoBehaviour
             }
             else
             {
-                playerRB.AddForce(new Vector2(speedInJump * horizontalInput, 0), ForceMode2D.Force);
+                playerRB.AddForce(new Vector2(speedInJump * horizontalInput, 0) , ForceMode2D.Force);
             }
         }
 
