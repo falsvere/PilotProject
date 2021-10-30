@@ -6,13 +6,9 @@ public class PlayerControll : MonoBehaviour
 {
     private Rigidbody2D playerRB;
 
-    [SerializeField]
     private float speed = 12;
-    [SerializeField]
-    private float speedInJump = 20;
-    [SerializeField]
-    private float jumpForce;
-    [SerializeField]
+    private float speedInJump = 15;
+    private float jumpForce = 10;
     private float rotation = 400;
 
 
@@ -44,9 +40,9 @@ public class PlayerControll : MonoBehaviour
         {
             Debug.Log("asdads");
             isOnFloor = false;
-            playerRB.rotation *= 0f;
-            playerRB.velocity *= 0f;
-            playerRB.AddForce(new Vector2(horizontalInput * speedInJump/2.5f, jumpForce), ForceMode2D.Impulse);
+            playerRB.rotation *= 0.2f;
+            playerRB.velocity *= 0.2f;
+            playerRB.AddForce(new Vector2(horizontalInput * speedInJump/11f, jumpForce), ForceMode2D.Impulse);
             activateJump = false;
 
         }else if (horizontalInput != 0 && !activateJump)
