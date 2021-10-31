@@ -6,13 +6,9 @@ public class PlayerControll : MonoBehaviour
 {
     private Rigidbody2D playerRB;
 
-    [SerializeField]
     private float speed = 12;
-    [SerializeField]
-    private float speedInJump = 20;
-    [SerializeField]
-    private float jumpForce;
-    [SerializeField]
+    private float speedInJump = 15;
+    private float jumpForce = 10;
     private float rotation = 400;
 
 
@@ -33,23 +29,26 @@ public class PlayerControll : MonoBehaviour
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
 
-
+        //if player press jump in static
         if (activateJump && horizontalInput == 0)
         {
             isOnFloor = false;
             playerRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             activateJump = false;
 
-        } else if (horizontalInput != 0 && activateJump)
+        } 
+        // if player press jump in movement on floor
+        else if (horizontalInput != 0 && activateJump)
         {
-            Debug.Log("asdads");
             isOnFloor = false;
-            playerRB.rotation *= 0f;
-            playerRB.velocity *= 0f;
-            playerRB.AddForce(new Vector2(horizontalInput * speedInJump/2.5f, jumpForce), ForceMode2D.Impulse);
+            playerRB.rotation *= 0.2f;
+            playerRB.velocity *= 0.2f;
+            playerRB.AddForce(new Vector2(horizontalInput * speedInJump/11f, jumpForce), ForceMode2D.Impulse);
             activateJump = false;
 
-        }else if (horizontalInput != 0 && !activateJump)
+        }
+        //if player move without jumping on floor or in air
+        else if (horizontalInput != 0 && !activateJump)
         {
             if (isOnFloor)
             {
@@ -66,6 +65,8 @@ public class PlayerControll : MonoBehaviour
             }
         }
 
+
+        //dpop speed when control buttons do not pressed to avoid inertia
         if (isOnFloor && horizontalInput == 0)
         {
             playerRB.velocity *= 0f;
@@ -74,6 +75,7 @@ public class PlayerControll : MonoBehaviour
 
     private void Update()
     {
+        //throw to fixedUpdate marker that space was pressed
         if (Input.GetButtonDown("Jump") && isOnFloor)
         {
             activateJump = true;
