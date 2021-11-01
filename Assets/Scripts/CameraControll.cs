@@ -8,21 +8,31 @@ public class CameraControll : MonoBehaviour
 
     private float leftBorder;
     private float rightBorder;
+    private float cameraGapDivider = 2f;
+    private float cameraFromCenterToBorderDistance;
+
+
 
     void Start()
     {
         player = GameObject.Find("Player");
-        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10f);
-        rightBorder = GameObject.FindGameObjectWithTag("Left Border").transform.position.x + 0.55f;
-        leftBorder = GameObject.FindGameObjectWithTag("Left Border").transform.position.x + 0.55f;
-        Debug.Log(rightBorder);
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
+        cameraFromCenterToBorderDistance = Camera.main.orthographicSize * 2 - 1.117319f;
+        rightBorder = GameObject.FindGameObjectWithTag("Right Border").transform.position.x - cameraFromCenterToBorderDistance;
+        leftBorder = GameObject.FindGameObjectWithTag("Left Border").transform.position.x + cameraFromCenterToBorderDistance;
     }
 
     void LateUpdate()
     {
-        // ToDo add small delay for camera moving to create sense of speed
-        //transform.position = Vector3.Lerp(transform.position,new Vector3(player.transform.position.x, player.transform.position.y, -10f), 0.1f);
-        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10f);
-        Debug.Log(transform.position.x + Camera.main.orthographicSize * 2 - 1.117319f);
+        SetCameraPosition();
+    }
+
+    void SetCameraPosition()
+    {
+        float playerPositionWithGap = player.transform.position.x - Input.GetAxis("Horizontal") / cameraGapDivider;
+        Vector3 cameraPosition = new Vector3(Mathf.Clamp(playerPositionWithGap, leftBorder, rightBorder), player.transform.position.y, transform.position.z);
+
+        transform.position = cameraPosition;
+
     }
 }
