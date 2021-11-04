@@ -11,8 +11,9 @@ public class PlayerControll : MonoBehaviour
     private float jumpForce = 10;
     private float rotation = 400;
 
-
+    [SerializeField]
     private bool activateJump = false;
+    [SerializeField]
     private bool isOnFloor = false;
 
     void Start()
@@ -85,7 +86,7 @@ public class PlayerControll : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.name == "Floor")
+        if(collision.collider.name == "Floor" || collision.collider.name == "Platform")
         {
             isOnFloor = true;
         }
@@ -94,6 +95,14 @@ public class PlayerControll : MonoBehaviour
         if (collision.collider.name == "Border")
         {
             playerRB.velocity *= 0f;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.name == "Floor" || collision.collider.name == "Platform")
+        {
+            isOnFloor = false;
         }
     }
 
