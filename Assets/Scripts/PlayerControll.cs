@@ -6,10 +6,12 @@ public class PlayerControll : MonoBehaviour
 {
     private Rigidbody2D playerRB;
 
-    private float speed = 12;
-    private float speedInJump = 15;
-    private float jumpForce = 10;
-    private float rotation = 400;
+    private float speed = 12f;
+    private float speedInJump = 20f;
+    private float jumpForce = 10f;
+    private float rotation = 400f;
+    private float jumpXSpeedInMov = 1.35f;
+
 
     [SerializeField]
     private bool activateJump = false;
@@ -44,7 +46,7 @@ public class PlayerControll : MonoBehaviour
             isOnFloor = false;
             playerRB.rotation *= 0.2f;
             playerRB.velocity *= 0.2f;
-            playerRB.AddForce(new Vector2(horizontalInput * speedInJump/11f, jumpForce), ForceMode2D.Impulse);
+            playerRB.AddForce(new Vector2(horizontalInput * jumpXSpeedInMov, jumpForce), ForceMode2D.Impulse);
             activateJump = false;
 
         }
@@ -86,9 +88,14 @@ public class PlayerControll : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.name == "Floor" || collision.collider.name == "Platform")
+        if(collision.collider.name == "Floor" || collision.collider.CompareTag("Platform"))
         {
             isOnFloor = true;
+        }
+
+        if (collision.collider.CompareTag("Platform"))
+        {
+            playerRB.velocity *= 0f;
         }
 
 
@@ -100,7 +107,7 @@ public class PlayerControll : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.collider.name == "Floor" || collision.collider.name == "Platform")
+        if (collision.collider.name == "Floor" || collision.collider.CompareTag("Platform"))
         {
             isOnFloor = false;
         }
