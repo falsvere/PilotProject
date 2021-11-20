@@ -104,5 +104,4 @@ public class PlayerControll : MonoBehaviour
             isOnFloor = false;
         }
     }
-
 }
