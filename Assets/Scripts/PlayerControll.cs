@@ -22,14 +22,8 @@ public class PlayerControll : MonoBehaviour
         playerRB = GetComponent<Rigidbody2D>();
     }
 
-    private void FixedUpdate()
+    public void MoveFunction(float horizontalInput)
     {
-        MoveFunction();
-    }
-    
-    private void MoveFunction()
-    {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
 
         //if player press jump in static
         if (activateJump && horizontalInput == 0)
@@ -75,7 +69,7 @@ public class PlayerControll : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void ThowJumpMarkerToFU()
     {
         //throw to fixedUpdate marker that space was pressed
         if (Input.GetButtonDown("Jump") && isOnFloor)
@@ -83,7 +77,6 @@ public class PlayerControll : MonoBehaviour
             activateJump = true;
         }
     }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

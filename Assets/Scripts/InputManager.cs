@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private PlayerControll player;
+
     void Start()
     {
-        
+        player = GameObject.Find("Player").GetComponent<PlayerControll>();
     }
 
-    // Update is called once per frame
+    private void FixedUpdate()
+    {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        player.MoveFunction(horizontalInput);
+    }
+
     void Update()
     {
-        
+        player.ThowJumpMarkerToFU();
     }
 }

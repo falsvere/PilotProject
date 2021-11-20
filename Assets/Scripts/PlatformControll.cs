@@ -15,10 +15,6 @@ public class PlatformControll : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
-    void Update()
-    {
-    }
-
     private IEnumerator DestroyPlatformCoroutine()
     {
         for(int i = 0; i <= timeBeforeDestroy; i++) {
