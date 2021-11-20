@@ -13,9 +13,8 @@ public class PlayerControll : MonoBehaviour
     private float jumpXSpeedInMov = 1.35f;
 
 
-    [SerializeField]
+
     private bool activateJump = false;
-    [SerializeField]
     private bool isOnFloor = false;
 
     void Start()
@@ -55,10 +54,10 @@ public class PlayerControll : MonoBehaviour
         {
             if (isOnFloor)
             {
-                Vector2 moveDirection = new Vector2(speed, 0) * horizontalInput;
+                Vector2 velocity = new Vector2(speed, 0) * horizontalInput;
                 float RBRotation = playerRB.rotation + rotation * Time.fixedDeltaTime * - horizontalInput;
 
-                playerRB.velocity = moveDirection;
+                playerRB.velocity = velocity;
       
                 playerRB.MoveRotation(RBRotation);
             }
@@ -88,16 +87,16 @@ public class PlayerControll : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.name == "Floor" || collision.collider.CompareTag("Platform"))
+        if(collision.collider.name == "Floor")
         {
             isOnFloor = true;
         }
 
         if (collision.collider.CompareTag("Platform"))
         {
+            isOnFloor = true;
             playerRB.velocity *= 0f;
         }
-
 
         if (collision.collider.name == "Border")
         {
