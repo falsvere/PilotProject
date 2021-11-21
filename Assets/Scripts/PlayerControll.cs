@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControll : MonoBehaviour
+public class PlayerControll : MonoBehaviour, ICanAttack
 {
     private Rigidbody2D playerRB;
 
@@ -21,6 +21,8 @@ public class PlayerControll : MonoBehaviour
     {
         playerRB = GetComponent<Rigidbody2D>();
     }
+
+    
 
     public void MoveFunction(float horizontalInput)
     {
