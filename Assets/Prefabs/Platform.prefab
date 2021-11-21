@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6810339202607151144}
   - component: {fileID: 6810339202607151147}
   - component: {fileID: 6810339202607151146}
-  - component: {fileID: 1261518999098615271}
+  - component: {fileID: 2606617979104953793}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Platform
@@ -110,7 +110,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1261518999098615271
+--- !u!114 &2606617979104953793
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,3 +122,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09d1d07af4916824bb2926059b3fc8e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeBeforeDestroy: 6
+  timeBeforeAppear: 6
