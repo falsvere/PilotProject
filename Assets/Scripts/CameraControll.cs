@@ -21,7 +21,7 @@ public class CameraControll : MonoBehaviour
 
         cameraFromCenterToBorderDistance = Camera.main.orthographicSize * 2 - player.transform.localScale.x;
 
-
+        //max left/right positions of camera center
         rightBorder = GameObject.FindGameObjectWithTag("Right Border").transform.position.x - cameraFromCenterToBorderDistance;
         leftBorder = GameObject.FindGameObjectWithTag("Left Border").transform.position.x + cameraFromCenterToBorderDistance;
     }
