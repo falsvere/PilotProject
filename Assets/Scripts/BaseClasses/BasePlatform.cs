@@ -21,14 +21,14 @@ public abstract class BasePlatform : MonoBehaviour
         for (int i = 0; i <= timeBeforeDestroy; i++)
         {
             yield return new WaitForSeconds(1);
-            Debug.Log("Time before destroy :" + (timeBeforeDestroy - i));
+           // Debug.Log("Time before destroy :" + (timeBeforeDestroy - i));
         }
 
         gameObject.SetActive(false);
 
         yield return new WaitForSeconds(timeBeforeAppear);
 
-        Debug.Log("should activate");
+       // Debug.Log("should activate");
         gameObject.SetActive(true);
 
         isCoroutineActive = false;

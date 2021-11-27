@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControll : MonoBehaviour, ICanAttack
+public class PlayerControll : MonoBehaviour, ICanAttack, IHaveHealth
 {
     private Rigidbody2D playerRB;
 
@@ -22,7 +22,20 @@ public class PlayerControll : MonoBehaviour, ICanAttack
         playerRB = GetComponent<Rigidbody2D>();
     }
 
-    
+    public void Attack()
+    {
+
+    }
+
+    public void TakeDamage(int damage)
+    {
+
+    }
+
+    public void InitHealth(int healthPoints)
+    {
+
+    }
 
     public void MoveFunction(float horizontalInput)
     {
