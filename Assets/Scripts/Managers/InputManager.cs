@@ -13,11 +13,30 @@ public class InputManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        HorizontalInputListeners();
+    }
+
+    void Update()
+    {
+        SpaceListeners();
+        LeftClickListeners();
+    }
+
+    private void HorizontalInputListeners()
+    {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         player.MoveFunction(horizontalInput);
     }
 
-    void Update()
+    private void LeftClickListeners()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            player.GetComponent<ICanAttack>().Attack();
+        }
+    }
+
+    private void SpaceListeners()
     {
         player.ThowJumpMarkerToFU();
     }

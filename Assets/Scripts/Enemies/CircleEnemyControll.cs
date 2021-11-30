@@ -23,6 +23,5 @@ public class CircleEnemyControll : BaseEnemy
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        TakeDamage(10);
     }
 }

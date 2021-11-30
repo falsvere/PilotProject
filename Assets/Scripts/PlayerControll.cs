@@ -6,13 +6,13 @@ public class PlayerControll : MonoBehaviour, ICanAttack, IHaveHealth
 {
     private Rigidbody2D playerRB;
 
+    [SerializeField] private GameObject bulletPF;
+
     private float speed = 12f;
     private float speedInJump = 20f;
     private float jumpForce = 10f;
     private float rotation = 400f;
     private float jumpXSpeedInMov = 1.35f;
-
-
 
     private bool activateJump = false;
     private bool isOnFloor = false;
@@ -24,7 +24,7 @@ public class PlayerControll : MonoBehaviour, ICanAttack, IHaveHealth
 
     public void Attack()
     {
-
+        Instantiate(bulletPF);
     }
 
     public void TakeDamage(int damage)
