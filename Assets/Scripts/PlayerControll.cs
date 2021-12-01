@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControll : MonoBehaviour, ICanAttack, IHaveHealth
+public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
 {
     private Rigidbody2D playerRB;
 
@@ -22,9 +22,18 @@ public class PlayerControll : MonoBehaviour, ICanAttack, IHaveHealth
         playerRB = GetComponent<Rigidbody2D>();
     }
 
-    public void Attack()
+    public void Shoot(Vector3 destination)
     {
-        Instantiate(bulletPF);
+
+        Debug.Log(destination);
+        Debug.Log(gameObject.transform.position);
+
+        Rigidbody2D bulletRB = Instantiate(bulletPF, gameObject.transform.position , Quaternion.identity).GetComponent<Rigidbody2D>();
+
+/*        Vector3 direction = (gameObject.transform.position - destination).normalized;
+        Debug.Log(direction);
+
+        bulletRB.AddForce(direction * 50, ForceMode2D.Impulse);*/
     }
 
     public void TakeDamage(int damage)

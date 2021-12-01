@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, ICanAttack, IMovable
+public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
 {
     private int health;
 
@@ -14,11 +14,6 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, ICanAttack, IMovab
 
     public abstract void Move();
 
-
-    public virtual void Attack()
-    {
-
-    }
 
     public virtual void TakeDamage(int damage)
     {

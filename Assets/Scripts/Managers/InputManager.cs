@@ -32,7 +32,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            player.GetComponent<ICanAttack>().Attack();
+            player.GetComponent<ICanShoot>().Shoot(Input.mousePosition);
         }
     }
 
