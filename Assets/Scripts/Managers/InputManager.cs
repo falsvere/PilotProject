@@ -32,7 +32,8 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            player.GetComponent<ICanShoot>().Shoot(Input.mousePosition);
+            Vector3 mousePositionConvertedFormPx = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            player.GetComponent<ICanShoot>().Shoot(mousePositionConvertedFormPx);
         }
     }
 

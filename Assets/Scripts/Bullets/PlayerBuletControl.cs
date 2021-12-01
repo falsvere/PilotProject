@@ -4,7 +4,5 @@ using UnityEngine;
 
 public class PlayerBuletControl : BaseBullet
 {
-    void Start()
-    {
-    }
+
 }

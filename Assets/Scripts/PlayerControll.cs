@@ -14,36 +14,39 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
     private float rotation = 400f;
     private float jumpXSpeedInMov = 1.35f;
 
+    private int health;
+
     private bool activateJump = false;
     private bool isOnFloor = false;
 
     void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
+        InitHealth(100);
     }
 
     public void Shoot(Vector3 destination)
     {
+        Vector3 direction = destination - gameObject.transform.position;
+        Vector3 bulletPosition = gameObject.transform.position + direction.normalized;
+         
+        GameObject bullet = Instantiate(bulletPF, bulletPosition, Quaternion.LookRotation(direction, Vector3.forward));
+        PlayerBuletControl bulletScript = bullet.GetComponent<PlayerBuletControl>();
+        Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
 
-        Debug.Log(destination);
-        Debug.Log(gameObject.transform.position);
-
-        Rigidbody2D bulletRB = Instantiate(bulletPF, gameObject.transform.position , Quaternion.identity).GetComponent<Rigidbody2D>();
-
-/*        Vector3 direction = (gameObject.transform.position - destination).normalized;
-        Debug.Log(direction);
-
-        bulletRB.AddForce(direction * 50, ForceMode2D.Impulse);*/
+        bulletScript.shooter = gameObject;
+        bulletRB.AddForce(direction.normalized * bulletScript.speed, ForceMode2D.Impulse);
     }
 
     public void TakeDamage(int damage)
     {
-
+        health -= damage;
+        Debug.Log(health);
     }
 
     public void InitHealth(int healthPoints)
     {
-
+        health = healthPoints;
     }
 
     public void MoveFunction(float horizontalInput)

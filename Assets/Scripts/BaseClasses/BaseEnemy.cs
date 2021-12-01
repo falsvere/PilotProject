@@ -9,7 +9,6 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
     public void InitHealth(int healthPoints)
     {
         health = healthPoints;
-        Debug.Log(health);
     }
 
     public abstract void Move();
