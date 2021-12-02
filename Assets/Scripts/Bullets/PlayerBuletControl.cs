@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class PlayerBuletControl : BaseBullet
 {
-
+    private void Update()
+    {
+        DestroyOutOfBorders();
+    }
 }

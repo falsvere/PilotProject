@@ -13,10 +13,16 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
 
     public abstract void Move();
 
-
-    public virtual void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         health -= damage;
-        Debug.Log(health);
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+            Debug.Log(gameObject.name + "dead");
+        }else
+        {
+            Debug.Log(health);
+        }
     }
 }
