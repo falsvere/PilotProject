@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControll : MonoBehaviour
+public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
 {
     private Rigidbody2D playerRB;
+
+    [SerializeField] private GameObject bulletPF;
 
     private float speed = 12f;
     private float speedInJump = 20f;
@@ -12,25 +14,43 @@ public class PlayerControll : MonoBehaviour
     private float rotation = 400f;
     private float jumpXSpeedInMov = 1.35f;
 
+    private int health;
 
-    [SerializeField]
     private bool activateJump = false;
-    [SerializeField]
     private bool isOnFloor = false;
 
     void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
+        InitHealth(100);
     }
 
-    private void FixedUpdate()
+    public void Shoot(Vector3 destination)
     {
-        MoveFunction();
+        Vector3 direction = destination - gameObject.transform.position;
+        Vector3 bulletPosition = gameObject.transform.position + direction.normalized;
+         
+        GameObject bullet = Instantiate(bulletPF, bulletPosition, Quaternion.LookRotation(direction, Vector3.forward));
+        PlayerBuletControl bulletScript = bullet.GetComponent<PlayerBuletControl>();
+        Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
+
+        bulletScript.shooter = gameObject;
+        bulletRB.AddForce(direction.normalized * bulletScript.speed, ForceMode2D.Impulse);
     }
-    
-    private void MoveFunction()
+
+    public void TakeDamage(int damage)
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        health -= damage;
+        Debug.Log(health);
+    }
+
+    public void InitHealth(int healthPoints)
+    {
+        health = healthPoints;
+    }
+
+    public void MoveFunction(float horizontalInput)
+    {
 
         //if player press jump in static
         if (activateJump && horizontalInput == 0)
@@ -55,10 +75,10 @@ public class PlayerControll : MonoBehaviour
         {
             if (isOnFloor)
             {
-                Vector2 moveDirection = new Vector2(speed, 0) * horizontalInput;
+                Vector2 velocity = new Vector2(speed, 0) * horizontalInput;
                 float RBRotation = playerRB.rotation + rotation * Time.fixedDeltaTime * - horizontalInput;
 
-                playerRB.velocity = moveDirection;
+                playerRB.velocity = velocity;
       
                 playerRB.MoveRotation(RBRotation);
             }
@@ -76,7 +96,7 @@ public class PlayerControll : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void ThowJumpMarkerToFU()
     {
         //throw to fixedUpdate marker that space was pressed
         if (Input.GetButtonDown("Jump") && isOnFloor)
@@ -85,19 +105,18 @@ public class PlayerControll : MonoBehaviour
         }
     }
 
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.name == "Floor" || collision.collider.CompareTag("Platform"))
+        if(collision.collider.name == "Floor")
         {
             isOnFloor = true;
         }
 
         if (collision.collider.CompareTag("Platform"))
         {
+            isOnFloor = true;
             playerRB.velocity *= 0f;
         }
-
 
         if (collision.collider.name == "Border")
         {
@@ -112,5 +131,4 @@ public class PlayerControll : MonoBehaviour
             isOnFloor = false;
         }
     }
-
 }
