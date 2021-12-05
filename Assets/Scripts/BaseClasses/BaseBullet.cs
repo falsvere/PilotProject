@@ -5,11 +5,34 @@ using System;
 
 public abstract class BaseBullet : MonoBehaviour
 {
-    public float speed;
+    [SerializeField] private float speed;
+    private GameObject shooter;
     [SerializeField] private int damage;
 
 
-    public GameObject shooter;
+    public float speedSetter
+    {
+        set
+        {
+            speed = value;
+        }
+        get
+        {
+            return speed;
+        }
+    }
+
+    public GameObject shooterSetter {
+        set
+        {
+            shooter = value;
+        }
+        get
+        {
+            return shooter;
+        }
+    }
+
 
 
     private readonly Dictionary<char, float> gameBorders = new Dictionary<char, float> {
