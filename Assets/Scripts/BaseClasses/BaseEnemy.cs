@@ -6,6 +6,35 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
 {
     private int health;
 
+    [SerializeField] private float speed;
+
+    public float speedSetter
+    {
+        get
+        {
+            return speed;
+        }
+
+        set
+        {
+            speed = value;
+        }
+    }
+
+    private int moveDirection = 0;
+    public int moveDirectionSetter
+    {
+        get
+        {
+            return moveDirection;
+        }
+
+        set
+        {
+            moveDirection = value;
+        }
+    }
+
     public void InitHealth(int healthPoints)
     {
         health = healthPoints;
@@ -25,4 +54,5 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
             Debug.Log(health);
         }
     }
+
 }

@@ -4,18 +4,40 @@ using UnityEngine;
 
 public class CircleEnemyControll : BaseEnemy
 {
-    
+    //states
+        private bool isOnFloor = true;
+    /*    private bool isInAttack = false;
+        private bool isPreparingForAttack = false;*/
+    //states end
+
+    private Rigidbody2D circleRB;
+
+    [SerializeField] float jumpForce;
+
+
+    //methods
     void Start()
     {
+        circleRB = gameObject.GetComponent<Rigidbody2D>();
         InitHealth(100);
     }
 
     public override void Move()
     {
+        Vector2 force = new Vector2(moveDirectionSetter, 0);
+        Debug.Log(circleRB.velocity);
 
+        if(circleRB.velocity.x < 22f && circleRB.velocity.x > -22f)
+        {
+            circleRB.AddForce(force * speedSetter, ForceMode2D.Force);
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Jump()
     {
+        if (isOnFloor)
+        {
+            circleRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); ;
+        }
     }
 }
