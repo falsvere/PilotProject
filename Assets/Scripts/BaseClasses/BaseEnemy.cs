@@ -7,7 +7,16 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
     private int health;
 
     [SerializeField] private float speed;
+    [SerializeField] private float maxVelocity;
+    private int moveDirection = 0;
 
+    public float maxVelocityGetter
+    {
+        get
+        {
+            return maxVelocity;
+        }
+    }
     public float speedSetter
     {
         get
@@ -20,8 +29,6 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
             speed = value;
         }
     }
-
-    private int moveDirection = 0;
     public int moveDirectionSetter
     {
         get
@@ -35,6 +42,7 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
         }
     }
 
+    // methods
     public void InitHealth(int healthPoints)
     {
         health = healthPoints;

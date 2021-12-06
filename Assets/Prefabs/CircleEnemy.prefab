@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8957810506302323130}
   - component: {fileID: 8957810506302323014}
   - component: {fileID: 3395677866415076489}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CircleEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 30
+  maxVelocity: 22
   jumpForce: 10
 --- !u!114 &3395677866415076489
 MonoBehaviour:

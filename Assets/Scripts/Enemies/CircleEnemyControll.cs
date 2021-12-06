@@ -25,9 +25,8 @@ public class CircleEnemyControll : BaseEnemy
     public override void Move()
     {
         Vector2 force = new Vector2(moveDirectionSetter, 0);
-        Debug.Log(circleRB.velocity);
 
-        if(circleRB.velocity.x < 22f && circleRB.velocity.x > -22f)
+        if(circleRB.velocity.x < maxVelocityGetter && circleRB.velocity.x > -maxVelocityGetter)
         {
             circleRB.AddForce(force * speedSetter, ForceMode2D.Force);
         }
