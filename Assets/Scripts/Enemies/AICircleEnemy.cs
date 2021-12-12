@@ -7,6 +7,7 @@ public class AICircleEnemy : MonoBehaviour
     private CircleEnemyControll cirlceControll;
     private GameObject player;
     private float attackRange = 8f;
+    private SpriteRenderer circleSprite;
 
     private Coroutine playerDontMoveCoroutine;
     private Coroutine checkPlayerMovesCoroutine;
@@ -16,6 +17,7 @@ public class AICircleEnemy : MonoBehaviour
     { 
         player = GameObject.FindGameObjectWithTag("Player");
         cirlceControll = gameObject.GetComponent<CircleEnemyControll>();
+        circleSprite = gameObject.GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -40,18 +42,28 @@ public class AICircleEnemy : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        isPlayerInAttackArea();
+    }
+
     private IEnumerator OneSecDelayBeforeAttackPrep()
     {
+        cirlceControll.SetAttackPreparationState(true);
+
         yield return new WaitForSeconds(3);
 
-        Debug.Log("Corouutinestrrt");
+        cirlceControll.DistanceAttack(player.transform.position);
 
-
-
-        Debug.Log("Attack preparation");
-
-        checkPlayerMovesCoroutine = null;
+        if (checkPlayerMovesCoroutine != null)
+        {
+            StopCoroutine(checkPlayerMovesCoroutine);
+            checkPlayerMovesCoroutine = null;
+        }
+        playerDontMoveCoroutine = null;
     }
+
+
 
     private IEnumerator checkPlayerMoves()
     {
@@ -68,12 +80,15 @@ public class AICircleEnemy : MonoBehaviour
 
             isPlayerMoveAlot = xDifference >= 1 || yDifference >= 1;
 
+            Debug.Log(isPlayerMoveAlot);
+
             if (isPlayerMoveAlot)
             {
                 if (playerDontMoveCoroutine != null)
                 {
                     StopCoroutine(playerDontMoveCoroutine);
                     playerDontMoveCoroutine = null;
+                    cirlceControll.SetAttackPreparationState(false);
                 }
             }
             else
@@ -87,7 +102,7 @@ public class AICircleEnemy : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void isPlayerInAttackArea()
     {
         float distanceToPlayer = Vector2.Distance(player.transform.position, transform.position);
 
@@ -110,6 +125,7 @@ public class AICircleEnemy : MonoBehaviour
             {
                 StopCoroutine(playerDontMoveCoroutine);
                 playerDontMoveCoroutine = null;
+                cirlceControll.SetAttackPreparationState(false);
             }
         }
     }

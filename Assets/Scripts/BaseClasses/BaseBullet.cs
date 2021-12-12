@@ -9,7 +9,6 @@ public abstract class BaseBullet : MonoBehaviour
     private GameObject shooter;
     [SerializeField] private int damage;
 
-
     public float speedSetter
     {
         set
@@ -33,14 +32,12 @@ public abstract class BaseBullet : MonoBehaviour
         }
     }
 
-
-
     private readonly Dictionary<char, float> gameBorders = new Dictionary<char, float> {
         {'x', 30f },
         {'y', 15f },
     };
 
-
+    // methods
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject != shooter)
