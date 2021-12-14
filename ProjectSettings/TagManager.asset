@@ -14,9 +14,9 @@ TagManager:
   - PlayerAndEnemies
   - Water
   - UI
-  - 
-  - 
-  - 
+  - CircleEnemyLayer
+  - PlatformParrent
+  - PlatformChildrens
   - 
   - 
   - 

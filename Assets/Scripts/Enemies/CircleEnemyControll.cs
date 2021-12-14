@@ -72,18 +72,18 @@ public class CircleEnemyControll : BaseEnemy
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Platform"))
+/*        if (collision.gameObject.CompareTag("Platform"))
         {
             collisionEnterVelocity = circleRB.velocity;
             collision.gameObject.SetActive(false);
-        }
+        }*/
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        Debug.Log("sdfsdf");
+/*        Debug.Log("sdfsdf");
         if (collision.gameObject.CompareTag("Platform"))
         {
             circleRB.velocity = collisionEnterVelocity;
-        }
+        }*/
     }
 }
