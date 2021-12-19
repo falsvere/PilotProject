@@ -25,6 +25,7 @@ public class PlatformParticles : MonoBehaviour
             if(!parent.isCircleEnemyInteractionActive)
             {
                 StartCoroutine(parent.CircleEnemyInteraction());
+                parent.platformBoxCollider.enabled = false;
             }
         }
     }

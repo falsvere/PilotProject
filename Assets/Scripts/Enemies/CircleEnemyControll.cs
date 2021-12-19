@@ -5,7 +5,7 @@ using UnityEngine;
 public class CircleEnemyControll : BaseEnemy
 {
     //states
-        private bool isOnFloor = true;
+        private bool isOnFloor = false;
         private bool isInAttack = false;
         private bool isPreparingForAttack = false;
     //states end
@@ -27,15 +27,15 @@ public class CircleEnemyControll : BaseEnemy
         circleSprite = gameObject.GetComponent<SpriteRenderer>();
     }
 
-    public override void Move()
+    public override void Move(Vector3 targetPosition)
     {
-        if (!isPreparingForAttack && !isInAttack)
+        if (!isPreparingForAttack && !isInAttack && isOnFloor)
         {
-            Vector2 force = new Vector2(moveDirectionSetter, 0);
+            Vector2 force = new Vector2(targetPosition.normalized.x, 0);
 
-            if (circleRB.velocity.x < maxVelocityGetter && circleRB.velocity.x > -maxVelocityGetter)
+            if (circleRB.velocity.x <= maxVelocityGetter)
             {
-                circleRB.AddForce(force * speedSetter, ForceMode2D.Force);
+                circleRB.AddForce(force * speedSetter, ForceMode2D.Impulse);
             }
         }
     }
@@ -68,5 +68,27 @@ public class CircleEnemyControll : BaseEnemy
         Vector3 direction = destination - gameObject.transform.position;
 
         circleRB.AddForce(direction.normalized * distanceAttackForce, ForceMode2D.Impulse);
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Floor"))
+        {
+            isOnFloor = false;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject collisionGameobject = collision.gameObject;
+
+        if (collisionGameobject.CompareTag("Floor"))
+        {
+            isOnFloor = true;
+        } else if (collisionGameobject.CompareTag("Player"))
+        {
+            Vector3 forceDirection = collisionGameobject.transform.position - transform.position;
+            collisionGameobject.GetComponent<Rigidbody2D>().AddForce(forceDirection.normalized * 2, ForceMode2D.Impulse);
+        }
     }
 }

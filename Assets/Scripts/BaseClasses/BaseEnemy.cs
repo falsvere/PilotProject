@@ -48,7 +48,7 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
         health = healthPoints;
     }
 
-    public abstract void Move();
+    public abstract void Move(Vector3 targetPosition);
 
     public void TakeDamage(int damage)
     {

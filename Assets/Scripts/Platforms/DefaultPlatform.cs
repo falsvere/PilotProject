@@ -13,6 +13,7 @@ public class DefaultPlatform : BasePlatform
         SetChildrensScriptComponent();
         script = GetComponent<DefaultPlatform>();
         SetParentScriptForChildrens();
+        platformBoxCollider = GetComponent<BoxCollider2D>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

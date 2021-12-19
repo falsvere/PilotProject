@@ -90,10 +90,10 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
 
 
         //dpop speed when control buttons do not pressed to avoid inertia
-        if (isOnFloor && horizontalInput == 0)
+  /*      if (isOnFloor && horizontalInput == 0)
         {
             playerRB.velocity *= 0f;
-        }
+        }*/
     }
 
     public void ThowJumpMarkerToFU()

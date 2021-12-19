@@ -22,20 +22,6 @@ public class AICircleEnemy : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.C)) {
-            cirlceControll.moveDirectionSetter = -1;
-        } else if(Input.GetKey(KeyCode.V)) {
-            cirlceControll.moveDirectionSetter = 1;
-        } else
-        {
-            cirlceControll.moveDirectionSetter = 0;
-        }
-
-        if(cirlceControll.moveDirectionSetter != 0)
-        {
-            cirlceControll.Move();
-        }
-
         if (Input.GetKeyDown(KeyCode.X))
         {
             cirlceControll.Jump();
@@ -45,6 +31,13 @@ public class AICircleEnemy : MonoBehaviour
     private void FixedUpdate()
     {
         isPlayerInAttackArea();
+        PusruePlayer();
+    }
+
+    private void PusruePlayer()
+    {
+        Vector3 moveDirection = player.transform.position - transform.position;
+        cirlceControll.Move(moveDirection);
     }
 
     private IEnumerator OneSecDelayBeforeAttackPrep()

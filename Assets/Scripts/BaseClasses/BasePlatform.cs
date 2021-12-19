@@ -15,6 +15,7 @@ public abstract class BasePlatform : MonoBehaviour
     public Coroutine destroyPlatformCoroutine;
 
     public PlatformParticles[] childsScript;
+    public BoxCollider2D platformBoxCollider;
 
     public void SetGameManager()
     {
@@ -32,6 +33,8 @@ public abstract class BasePlatform : MonoBehaviour
            // Debug.Log("Time before destroy :" + (timeBeforeDestroy - i));
         }
 
+        platformBoxCollider.enabled = false;
+
         gameObject.SetActive(false);
 
         gameManager.StartCoroutine(AppearPlatformCoroutine(timeBeforeAppear));
@@ -42,6 +45,8 @@ public abstract class BasePlatform : MonoBehaviour
     public virtual IEnumerator AppearPlatformCoroutine(int timeBeforeAppear)
     {
         isAppearCoroutineActive = true;
+
+        platformBoxCollider.enabled = true;
 
         GatherAllPlatfomParticles();
 

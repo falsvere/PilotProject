@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 3395677866415076489}
   m_Layer: 6
   m_Name: CircleEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -218,10 +218,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49b8c5645a572f4da1f7d58ce5e033f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  speed: 20
   maxVelocity: 22
   jumpForce: 10
-  distanceAttackForce: 50
+  distanceAttackForce: 200
 --- !u!114 &3395677866415076489
 MonoBehaviour:
   m_ObjectHideFlags: 0
