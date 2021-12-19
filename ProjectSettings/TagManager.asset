@@ -11,7 +11,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - PlayerAndEnemies
+  - Player
   - Water
   - UI
   - CircleEnemyLayer

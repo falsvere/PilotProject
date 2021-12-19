@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 8957810506302323130}
   - component: {fileID: 8957810506302323014}
   - component: {fileID: 3395677866415076489}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: CircleEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 2
+  m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1

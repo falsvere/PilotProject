@@ -69,21 +69,4 @@ public class CircleEnemyControll : BaseEnemy
 
         circleRB.AddForce(direction.normalized * distanceAttackForce, ForceMode2D.Impulse);
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-/*        if (collision.gameObject.CompareTag("Platform"))
-        {
-            collisionEnterVelocity = circleRB.velocity;
-            collision.gameObject.SetActive(false);
-        }*/
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-/*        Debug.Log("sdfsdf");
-        if (collision.gameObject.CompareTag("Platform"))
-        {
-            circleRB.velocity = collisionEnterVelocity;
-        }*/
-    }
 }

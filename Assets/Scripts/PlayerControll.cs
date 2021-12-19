@@ -10,7 +10,7 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
 
     private float speed = 12f;
     private float speedInJump = 20f;
-    private float jumpForce = 10f;
+    private float jumpForce = 50f;
     private float rotation = 400f;
     private float jumpXSpeedInMov = 1.35f;
 
