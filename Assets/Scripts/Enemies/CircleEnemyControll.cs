@@ -14,10 +14,10 @@ public class CircleEnemyControll : BaseEnemy
 
     [SerializeField] float jumpForce;
     [SerializeField] float distanceAttackForce;
+    [SerializeField] float bounceForceOnPlayerCollision;
 
     private SpriteRenderer circleSprite;
 
-    private Vector2 collisionEnterVelocity;
 
     //methods
     void Start()
@@ -29,13 +29,19 @@ public class CircleEnemyControll : BaseEnemy
 
     public override void Move(Vector3 targetPosition)
     {
-        if (!isPreparingForAttack && !isInAttack && isOnFloor)
+        if (!isPreparingForAttack && !isInAttack)
         {
+            float maxVelocity = maxVelocityGetter;
+
             Vector2 force = new Vector2(targetPosition.normalized.x, 0);
 
-            if (circleRB.velocity.x <= maxVelocityGetter)
+            if (circleRB.velocity.x <= maxVelocity && circleRB.velocity.x >= -maxVelocity)
             {
-                circleRB.AddForce(force * speedSetter, ForceMode2D.Impulse);
+                if(!isOnFloor)
+                {
+                    maxVelocity /= 3;
+                }
+                circleRB.AddForce(force.normalized * maxVelocity, ForceMode2D.Impulse);
             }
         }
     }
@@ -52,6 +58,8 @@ public class CircleEnemyControll : BaseEnemy
     {
         if (isInAttackPrep)
         {
+            circleRB.velocity *= 0f;
+            circleRB.angularVelocity *= 0f;
             isPreparingForAttack = true;
             circleSprite.color = new Color32(255, 255, 255, 255);
         } else
@@ -64,6 +72,8 @@ public class CircleEnemyControll : BaseEnemy
     public void DistanceAttack(Vector3 destination)
     {
         SetAttackPreparationState(false);
+
+        isInAttack = true;
 
         Vector3 direction = destination - gameObject.transform.position;
 
@@ -84,11 +94,15 @@ public class CircleEnemyControll : BaseEnemy
 
         if (collisionGameobject.CompareTag("Floor"))
         {
+            isInAttack = false;
             isOnFloor = true;
         } else if (collisionGameobject.CompareTag("Player"))
         {
+            Rigidbody2D playerRB = collisionGameobject.GetComponent<Rigidbody2D>();
             Vector3 forceDirection = collisionGameobject.transform.position - transform.position;
-            collisionGameobject.GetComponent<Rigidbody2D>().AddForce(forceDirection.normalized * 2, ForceMode2D.Impulse);
+            circleRB.velocity *= 0f;
+            circleRB.AddForce(-forceDirection.normalized * bounceForceOnPlayerCollision, ForceMode2D.Impulse);
+            playerRB.AddForce(forceDirection.normalized * bounceForceOnPlayerCollision, ForceMode2D.Impulse);
         }
     }
 }

@@ -40,5 +40,6 @@ public class InputManager : MonoBehaviour
     private void SpaceListeners()
     {
         player.ThowJumpMarkerToFU();
+        player.DropVelocityOnKeysUp();
     }
 }

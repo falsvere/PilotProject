@@ -11,6 +11,7 @@ public class AICircleEnemy : MonoBehaviour
 
     private Coroutine playerDontMoveCoroutine;
     private Coroutine checkPlayerMovesCoroutine;
+    private LayerMask rayCastLayer;
 
     //mehods
     void Start()
@@ -18,6 +19,8 @@ public class AICircleEnemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         cirlceControll = gameObject.GetComponent<CircleEnemyControll>();
         circleSprite = gameObject.GetComponent<SpriteRenderer>();
+
+        rayCastLayer = LayerMask.GetMask("Enemies");
     }
 
     void Update()
@@ -31,13 +34,9 @@ public class AICircleEnemy : MonoBehaviour
     private void FixedUpdate()
     {
         isPlayerInAttackArea();
-        PusruePlayer();
-    }
-
-    private void PusruePlayer()
-    {
         Vector3 moveDirection = player.transform.position - transform.position;
-        cirlceControll.Move(moveDirection);
+        //cirlceControll.Move(moveDirection);
+        CastObstacleDetectionRay(moveDirection);
     }
 
     private IEnumerator OneSecDelayBeforeAttackPrep()
@@ -56,7 +55,18 @@ public class AICircleEnemy : MonoBehaviour
         playerDontMoveCoroutine = null;
     }
 
+    private bool CastObstacleDetectionRay(Vector3 moveDirection)
+    {
+        Vector2 reyDirection = new Vector2(moveDirection.normalized.x, 0);
+        RaycastHit2D detectObstacles = Physics2D.Raycast(transform.position, reyDirection.normalized, 8f, rayCastLayer);
+        Debug.DrawRay(transform.position, reyDirection.normalized * 8, Color.green);
+        if(detectObstacles.transform != null) 
+        {
+            Debug.Log(detectObstacles.transform.name);
+        }
 
+        return true;
+    }
 
     private IEnumerator checkPlayerMoves()
     {

@@ -87,13 +87,6 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
                 playerRB.AddForce(new Vector2(speedInJump * horizontalInput, 0) , ForceMode2D.Force);
             }
         }
-
-
-        //dpop speed when control buttons do not pressed to avoid inertia
-  /*      if (isOnFloor && horizontalInput == 0)
-        {
-            playerRB.velocity *= 0f;
-        }*/
     }
 
     public void ThowJumpMarkerToFU()
@@ -103,6 +96,14 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
         {
             activateJump = true;
         }
+    }
+
+    public void DropVelocityOnKeysUp()
+    {
+        if (Input.GetButtonUp("Horizontal") && isOnFloor) {
+            playerRB.velocity *= 0f;
+            playerRB.rotation *= 0f;
+        } ;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
