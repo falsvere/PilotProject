@@ -10,7 +10,7 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
 
     private float speed = 12f;
     private float speedInJump = 20f;
-    private float jumpForce = 50f;
+    private float jumpForce = 60f;
     private float rotation = 400f;
     private float jumpXSpeedInMov = 1.35f;
 
@@ -64,8 +64,8 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
         else if (horizontalInput != 0 && activateJump)
         {
             isOnFloor = false;
-            playerRB.rotation *= 0.2f;
-            playerRB.velocity *= 0.2f;
+            playerRB.rotation *= 0.4f;
+            playerRB.velocity *= 0.4f;
             playerRB.AddForce(new Vector2(horizontalInput * jumpXSpeedInMov, jumpForce), ForceMode2D.Impulse);
             activateJump = false;
 

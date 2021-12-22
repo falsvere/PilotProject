@@ -35,8 +35,12 @@ public class AICircleEnemy : MonoBehaviour
     {
         isPlayerInAttackArea();
         Vector3 moveDirection = player.transform.position - transform.position;
-        //cirlceControll.Move(moveDirection);
-        CastObstacleDetectionRay(moveDirection);
+        cirlceControll.Move(moveDirection);
+
+        if (CastObstacleDetectionRay(moveDirection))
+        {
+            cirlceControll.Jump();
+        }
     }
 
     private IEnumerator OneSecDelayBeforeAttackPrep()
@@ -58,14 +62,15 @@ public class AICircleEnemy : MonoBehaviour
     private bool CastObstacleDetectionRay(Vector3 moveDirection)
     {
         Vector2 reyDirection = new Vector2(moveDirection.normalized.x, 0);
-        RaycastHit2D detectObstacles = Physics2D.Raycast(transform.position, reyDirection.normalized, 8f, rayCastLayer);
-        Debug.DrawRay(transform.position, reyDirection.normalized * 8, Color.green);
+        RaycastHit2D detectObstacles = Physics2D.Raycast(transform.position, reyDirection.normalized, 2f, rayCastLayer);
+        Debug.DrawRay(transform.position, reyDirection.normalized * 2, Color.green);
         if(detectObstacles.transform != null) 
         {
-            Debug.Log(detectObstacles.transform.name);
+            return true;
+        } else
+        {
+            return false;
         }
-
-        return true;
     }
 
     private IEnumerator checkPlayerMoves()
