@@ -7,17 +7,19 @@ TagManager:
   - Left Border
   - Right Border
   - Platform
+  - Enemy
+  - Floor
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - CircleEnemyLayer
+  - PlatformParrent
+  - PlatformChildrens
+  - Enemies
   - 
   - 
   - 

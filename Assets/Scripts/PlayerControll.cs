@@ -10,7 +10,7 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
 
     private float speed = 12f;
     private float speedInJump = 20f;
-    private float jumpForce = 10f;
+    private float jumpForce = 60f;
     private float rotation = 400f;
     private float jumpXSpeedInMov = 1.35f;
 
@@ -64,8 +64,8 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
         else if (horizontalInput != 0 && activateJump)
         {
             isOnFloor = false;
-            playerRB.rotation *= 0.2f;
-            playerRB.velocity *= 0.2f;
+            playerRB.rotation *= 0.4f;
+            playerRB.velocity *= 0.4f;
             playerRB.AddForce(new Vector2(horizontalInput * jumpXSpeedInMov, jumpForce), ForceMode2D.Impulse);
             activateJump = false;
 
@@ -87,13 +87,6 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
                 playerRB.AddForce(new Vector2(speedInJump * horizontalInput, 0) , ForceMode2D.Force);
             }
         }
-
-
-        //dpop speed when control buttons do not pressed to avoid inertia
-        if (isOnFloor && horizontalInput == 0)
-        {
-            playerRB.velocity *= 0f;
-        }
     }
 
     public void ThowJumpMarkerToFU()
@@ -103,6 +96,14 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
         {
             activateJump = true;
         }
+    }
+
+    public void DropVelocityOnKeysUp()
+    {
+        if (Input.GetButtonUp("Horizontal") && isOnFloor) {
+            playerRB.velocity *= 0f;
+            playerRB.rotation *= 0f;
+        } ;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

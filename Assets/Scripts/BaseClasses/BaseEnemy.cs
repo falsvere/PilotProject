@@ -6,12 +6,49 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
 {
     private int health;
 
+    [SerializeField] private float speed;
+    [SerializeField] private float maxVelocity;
+    private int moveDirection = 0;
+
+    public float maxVelocityGetter
+    {
+        get
+        {
+            return maxVelocity;
+        }
+    }
+    public float speedSetter
+    {
+        get
+        {
+            return speed;
+        }
+
+        set
+        {
+            speed = value;
+        }
+    }
+    public int moveDirectionSetter
+    {
+        get
+        {
+            return moveDirection;
+        }
+
+        set
+        {
+            moveDirection = value;
+        }
+    }
+
+    // methods
     public void InitHealth(int healthPoints)
     {
         health = healthPoints;
     }
 
-    public abstract void Move();
+    public abstract void Move(Vector3 targetPosition);
 
     public void TakeDamage(int damage)
     {
@@ -25,4 +62,5 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
             Debug.Log(health);
         }
     }
+
 }
