@@ -27,10 +27,11 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
 
     public void Shoot(Vector3 destination)
     {
+      
         Vector3 direction = destination - gameObject.transform.position;
-        Vector3 bulletPosition = gameObject.transform.position + direction.normalized;
+        Vector3 bulletPosition = transform.position + direction.normalized;
          
-        GameObject bullet = Instantiate(bulletPF, bulletPosition, Quaternion.LookRotation(direction, Vector3.forward));
+        GameObject bullet = Instantiate(bulletPF, bulletPosition, Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, 90) * direction));
         PlayerBuletControl bulletScript = bullet.GetComponent<PlayerBuletControl>();
         Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
 

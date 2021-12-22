@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField]
     private PlayerControll player;
-
-    void Start()
-    {
-        player = GameObject.Find("Player").GetComponent<PlayerControll>();
-    }
 
     void Update()
     {
@@ -22,6 +18,7 @@ public class InputManager : MonoBehaviour
         HorizontalInputListeners();
     }
 
+    //custom methods
     private void HorizontalInputListeners()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -33,12 +30,13 @@ public class InputManager : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Vector3 mousePositionConvertedFormPx = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            player.GetComponent<ICanShoot>().Shoot(mousePositionConvertedFormPx);
+            player.Shoot(mousePositionConvertedFormPx);
         }
     }
 
     private void SpaceListeners()
     {
+        //TODO remove ThrowMarker
         player.ThowJumpMarkerToFU();
         player.DropVelocityOnKeysUp();
     }
