@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraControll : MonoBehaviour
 {
+    [SerializeField]
     private GameObject player;
 
     private float leftBorder;
@@ -15,7 +16,6 @@ public class CameraControll : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.Find("Player");
         transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
 
         cameraFromCenterToBorderDistance = Camera.main.orthographicSize * Camera.main.aspect;

@@ -11,15 +11,15 @@ public class InputManager : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<PlayerControll>();
     }
 
-    private void FixedUpdate()
-    {
-        HorizontalInputListeners();
-    }
-
     void Update()
     {
         SpaceListeners();
         LeftClickListeners();
+    }
+
+    private void FixedUpdate()
+    {
+        HorizontalInputListeners();
     }
 
     private void HorizontalInputListeners()
