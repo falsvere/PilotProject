@@ -19,6 +19,8 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
     private bool activateJump = false;
     private bool isOnFloor = false;
 
+    public Vector3 pd;
+
     void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
@@ -27,16 +29,15 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
 
     public void Shoot(Vector3 destination)
     {
-      
         Vector3 direction = destination - gameObject.transform.position;
         Vector3 bulletPosition = transform.position + direction.normalized;
-         
-        GameObject bullet = Instantiate(bulletPF, bulletPosition, Quaternion.LookRotation(Vector3.forward, Quaternion.Euler(0, 0, 90) * direction));
+        Quaternion bulletRotation = Quaternion.LookRotation(direction, Vector3.forward) * Quaternion.Euler(90, 0, 0);
+
+        GameObject bullet = Instantiate(bulletPF, bulletPosition, bulletRotation);
         PlayerBuletControl bulletScript = bullet.GetComponent<PlayerBuletControl>();
         Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
 
-        bulletScript.shooterSetter = gameObject;
-        bulletRB.AddForce(direction.normalized * bulletScript.speedSetter, ForceMode2D.Impulse);
+        bulletRB.AddForce(direction * bulletScript.speedSetter, ForceMode2D.Impulse);
     }
 
     public void TakeDamage(int damage)
