@@ -302,7 +302,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1127462980}
-  cameraDelayDivider: 1
+  playerConrtroll: {fileID: 1127462985}
+  cameraDelayDivider: 0.5
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -654,14 +655,14 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 30
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &1127462982
 CircleCollider2D:
@@ -757,7 +758,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPF: {fileID: 7329917324443292075, guid: 9dc398baef7001649ab3ed8ba3fccb80, type: 3}
-  pd: {x: 1, y: 0, z: 0}
+  speedForce: 100
+  maxVelocityInJumpDivider: 5
+  speedForceInJumpDivider: 2
+  jumpForce: 200
+  maxVelocity: 20
+  maxAngularVelocity: 900
+  minAngularVelocity: 20
 --- !u!1 &1276069485
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +11,11 @@ public class InputManager : MonoBehaviour
     {
         SpaceListeners();
         LeftClickListeners();
+
+        if (Input.GetButtonUp("Horizontal"))
+        {
+            player.DropVelocityOnKeysUp();
+        }
     }
 
     private void FixedUpdate()
@@ -37,8 +42,9 @@ public class InputManager : MonoBehaviour
 
     private void SpaceListeners()
     {
-        //TODO remove ThrowMarker
-        player.ThowJumpMarkerToFU();
-        player.DropVelocityOnKeysUp();
+        if(Input.GetButtonDown("Jump"))
+        {
+            player.Jump();
+        }
     }
 }

@@ -7,6 +7,9 @@ public class CameraControll : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
+    [SerializeField]
+    private PlayerControll playerConrtroll;
+
     private float leftBorder;
     private float rightBorder;
     
