@@ -46,14 +46,13 @@ public abstract class BasePlatform : MonoBehaviour
     {
         isAppearCoroutineActive = true;
 
-        platformBoxCollider.enabled = true;
-
         GatherAllPlatfomParticles();
 
         yield return new WaitForSeconds(timeBeforeAppear);
 
         // Debug.Log("should activate");
         gameObject.SetActive(true);
+        platformBoxCollider.enabled = true;
 
         isAppearCoroutineActive = false;
     }

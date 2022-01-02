@@ -6,7 +6,20 @@ public class PlatformParticles : MonoBehaviour
 {
     private Vector3 startPosition;
 
-    public DefaultPlatform parent;
+
+    private DefaultPlatform _parent;
+    public DefaultPlatform parent
+    {
+        get
+        {
+            return _parent;
+        }
+
+        set
+        {
+            _parent = value;
+        }
+    }
 
     void Start()
     {
@@ -22,10 +35,10 @@ public class PlatformParticles : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if(!parent.isCircleEnemyInteractionActive)
+            if(!_parent.isCircleEnemyInteractionActive)
             {
-                StartCoroutine(parent.CircleEnemyInteraction());
-                parent.platformBoxCollider.enabled = false;
+                StartCoroutine(_parent.CircleEnemyInteraction());
+                _parent.platformBoxCollider.enabled = false;
             }
         }
     }

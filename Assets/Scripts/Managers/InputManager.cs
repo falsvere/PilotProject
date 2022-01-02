@@ -1,14 +1,21 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField]
     private PlayerControll player;
 
-    void Start()
+    void Update()
     {
-        player = GameObject.Find("Player").GetComponent<PlayerControll>();
+        SpaceListeners();
+        LeftClickListeners();
+
+        if (Input.GetButtonUp("Horizontal"))
+        {
+            player.DropVelocityOnKeysUp();
+        }
     }
 
     private void FixedUpdate()
@@ -16,12 +23,7 @@ public class InputManager : MonoBehaviour
         HorizontalInputListeners();
     }
 
-    void Update()
-    {
-        SpaceListeners();
-        LeftClickListeners();
-    }
-
+    //custom methods
     private void HorizontalInputListeners()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -33,13 +35,16 @@ public class InputManager : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Vector3 mousePositionConvertedFormPx = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            player.GetComponent<ICanShoot>().Shoot(mousePositionConvertedFormPx);
+            mousePositionConvertedFormPx.z = 0;
+            player.Shoot(mousePositionConvertedFormPx);
         }
     }
 
     private void SpaceListeners()
     {
-        player.ThowJumpMarkerToFU();
-        player.DropVelocityOnKeysUp();
+        if(Input.GetButtonDown("Jump"))
+        {
+            player.Jump();
+        }
     }
 }
