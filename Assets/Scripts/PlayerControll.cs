@@ -22,10 +22,12 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
     private float maxAngularVelocity = 20f;
     [SerializeField]
     private float minAngularVelocity = 20f;
+    private float onPlatformOutXVelocityDivider = 0.5f;
 
     private int health;
 
     private bool isOnFloor = false;
+    private bool isInJump = false;
 
     void Start()
     {
@@ -83,7 +85,8 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
     public void Jump()
     {
         if(isOnFloor)
-        { 
+        {
+            isInJump = true;
             playerRB.velocity /= maxVelocityInJumpDivider;
             playerRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
@@ -102,6 +105,7 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
         if(collision.collider.name == "Floor")
         {
             isOnFloor = true;
+            isInJump = false;
             playerRB.velocity *= 0f;
             playerRB.angularVelocity *= 0f;
         }
@@ -109,20 +113,26 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
         if (collision.collider.CompareTag("Platform"))
         {
             isOnFloor = true;
+            isInJump = false;
             playerRB.velocity *= 0f;
             playerRB.angularVelocity *= 0f;
         }
-
-/*        if (collision.collider.name == "Border")
-        {
-            playerRB.velocity *= 0f;
-        }*/
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.collider.name == "Floor" || collision.collider.CompareTag("Platform"))
+        if (collision.collider.name == "Floor")
         {
+            isOnFloor = false;
+        }
+
+        if(collision.collider.CompareTag("Platform"))
+        {
+            if(!isInJump)
+            {
+                playerRB.velocity *= new Vector2(onPlatformOutXVelocityDivider, 1f);
+            }
+
             isOnFloor = false;
         }
     }

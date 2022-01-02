@@ -88,7 +88,6 @@ public class AICircleEnemy : MonoBehaviour
 
             isPlayerMoveAlot = xDifference >= 1 || yDifference >= 1;
 
-            Debug.Log(isPlayerMoveAlot);
 
             if (isPlayerMoveAlot)
             {

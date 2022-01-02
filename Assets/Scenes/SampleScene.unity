@@ -656,7 +656,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 30
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -761,10 +761,11 @@ MonoBehaviour:
   speedForce: 100
   maxVelocityInJumpDivider: 5
   speedForceInJumpDivider: 2
-  jumpForce: 200
+  jumpForce: 250
   maxVelocity: 20
   maxAngularVelocity: 900
-  minAngularVelocity: 20
+  minAngularVelocity: 800
+  isOnFloor: 0
 --- !u!1 &1276069485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,6 +1321,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2606617979104953793, guid: c49d05ebc8f3a8946811ed746f03084f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6810339202607151144, guid: c49d05ebc8f3a8946811ed746f03084f, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1399,11 +1404,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8957810506302323015, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.56
+      value: 11.97
       objectReference: {fileID: 0}
     - target: {fileID: 8957810506302323015, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.1
+      value: -3.62
       objectReference: {fileID: 0}
     - target: {fileID: 8957810506302323015, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
       propertyPath: m_LocalPosition.z
