@@ -765,7 +765,6 @@ MonoBehaviour:
   maxVelocity: 20
   maxAngularVelocity: 900
   minAngularVelocity: 800
-  isOnFloor: 0
 --- !u!1 &1276069485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1321,10 +1320,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2606617979104953793, guid: c49d05ebc8f3a8946811ed746f03084f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6810339202607151144, guid: c49d05ebc8f3a8946811ed746f03084f, type: 3}
       propertyPath: m_RootOrder
       value: 4
