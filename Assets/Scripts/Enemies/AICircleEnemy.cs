@@ -25,21 +25,21 @@ public class AICircleEnemy : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            cirlceControll.Jump();
-        }
     }
 
     private void FixedUpdate()
     {
-        isPlayerInAttackArea();
-        Vector3 moveDirection = player.transform.position - transform.position;
-        cirlceControll.Move(moveDirection);
-
-        if (CastObstacleDetectionRay(moveDirection))
+        if (!cirlceControll.isKnocked)
         {
-            cirlceControll.Jump();
+
+            isPlayerInAttackArea();
+            Vector3 moveDirection = player.transform.position - transform.position;
+            cirlceControll.Move(moveDirection);
+
+            if (CastObstacleDetectionRay(moveDirection))
+            {
+                cirlceControll.Jump();
+            }
         }
     }
 
@@ -133,6 +133,26 @@ public class AICircleEnemy : MonoBehaviour
                 StopCoroutine(playerDontMoveCoroutine);
                 playerDontMoveCoroutine = null;
                 cirlceControll.SetAttackPreparationState(false);
+            }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject collisionGameobject = collision.gameObject;
+
+        if (collisionGameobject.CompareTag("Player"))
+        {
+            if (checkPlayerMovesCoroutine != null)
+            {
+                StopCoroutine(checkPlayerMovesCoroutine);
+                checkPlayerMovesCoroutine = null;
+            }
+
+            if (playerDontMoveCoroutine != null)
+            {
+                StopCoroutine(playerDontMoveCoroutine);
+                playerDontMoveCoroutine = null;
             }
         }
     }

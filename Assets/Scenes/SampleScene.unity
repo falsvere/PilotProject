@@ -379,7 +379,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!50 &796523375
 Rigidbody2D:
   serializedVersion: 4
@@ -388,7 +388,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796523374}
-  m_BodyType: 1
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -396,7 +396,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: ac6241f0ff3ab4a4f9ce80b9f9837ddf, type: 2}
+  m_Material: {fileID: 6200000, guid: b16c004b3568f2c4b859a9aafd180080, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -510,7 +510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &951055692
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -545,7 +545,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951055691}
-  m_BodyType: 1
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -553,7 +553,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: ac6241f0ff3ab4a4f9ce80b9f9837ddf, type: 2}
+  m_Material: {fileID: 6200000, guid: b16c004b3568f2c4b859a9aafd180080, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -739,7 +739,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127462980}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.28, y: 1.79, z: 0}
+  m_LocalPosition: {x: 13.38, y: 1.97, z: 0}
   m_LocalScale: {x: 1.1173185, y: 1.1494253, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1091,7 +1091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &1981532280
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1126,7 +1126,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981532279}
-  m_BodyType: 1
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -1134,7 +1134,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: ac6241f0ff3ab4a4f9ce80b9f9837ddf, type: 2}
+  m_Material: {fileID: 6200000, guid: b16c004b3568f2c4b859a9aafd180080, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -1383,15 +1383,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
       propertyPath: jumpForce
-      value: 30
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
+      propertyPath: knockTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
+      propertyPath: clashDamage
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
       propertyPath: maxVelocity
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
-      propertyPath: bounceForceOnPlayerCollision
+      propertyPath: attackDamage
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
+      propertyPath: distanceAttackForce
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
+      propertyPath: bounceForceOnPlayerCollision
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8957810506302323015, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
       propertyPath: m_RootOrder
@@ -1443,7 +1459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8957810506302323131, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
