@@ -46,7 +46,7 @@ public class AICircleEnemy : MonoBehaviour
     {
         cirlceControll.SetAttackPreparationState(true);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
 
         cirlceControll.DistanceAttack(player.transform.position);
 
@@ -79,7 +79,7 @@ public class AICircleEnemy : MonoBehaviour
             Vector3 playerPreviousPosition = player.transform.position;
             bool isPlayerMoveAlot = false;
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
 
             Vector3 playerNewPosition = player.transform.position;
             float xDifference = Mathf.Max(playerPreviousPosition.x, playerNewPosition.x) - Mathf.Min(playerPreviousPosition.x, playerNewPosition.x);

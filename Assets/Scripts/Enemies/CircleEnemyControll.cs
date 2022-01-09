@@ -61,7 +61,10 @@ public class CircleEnemyControll : BaseEnemy
 
         if (isPlayerRightAbove && isPlayerHigh)
         {
-            circleRB.velocity *= 0;
+            if(!isInAttack)
+            {
+                circleRB.velocity *= 0;
+            }
             return;
         }
 
@@ -121,20 +124,21 @@ public class CircleEnemyControll : BaseEnemy
     {
         Rigidbody2D playerRB = playerGameobject.GetComponent<Rigidbody2D>();
         Vector3 forceDirection = playerGameobject.transform.position - transform.position;
+        playerRB.velocity *= 0f;
+        circleRB.velocity *= 0f;
 
         if (isInAttack)
         {
             DealAttack(playerGameobject);
+            playerRB.AddForce(forceDirection.normalized * bounceForceOnPlayerCollision * 3, ForceMode2D.Impulse);
         } else
         {
             Deal—lash(playerGameobject);
-            circleRB.velocity *= 0f;
             circleRB.AddForce(-forceDirection.normalized * bounceForceOnPlayerCollision, ForceMode2D.Impulse);
+            playerRB.AddForce(forceDirection.normalized * bounceForceOnPlayerCollision * 2, ForceMode2D.Impulse);
         }
 
         isPreparingForAttack = false;
-        playerRB.velocity *= 0f;
-        playerRB.AddForce(forceDirection.normalized * bounceForceOnPlayerCollision, ForceMode2D.Impulse);
 
         isKnocked = true;
         circleSprite.color = new Color32(0, 0, 0, 255);
