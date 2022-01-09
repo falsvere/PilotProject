@@ -42,13 +42,19 @@ public class AICircleEnemy : MonoBehaviour
         }
     }
 
-    private IEnumerator OneSecDelayBeforeAttackPrep()
+    private IEnumerator OneSecDelayBeforeAttack()
     {
         cirlceControll.SetAttackPreparationState(true);
 
         yield return new WaitForSeconds(1);
 
-        cirlceControll.DistanceAttack(player.transform.position);
+        Vector3 moveDirection = player.transform.position - transform.position;
+
+        if (!CastObstacleDetectionRay(moveDirection, 7.4f))
+        {
+            cirlceControll.DistanceAttack(player.transform.position);
+        }
+        cirlceControll.SetAttackPreparationState(false);
 
         if (checkPlayerMovesCoroutine != null)
         {
@@ -58,11 +64,11 @@ public class AICircleEnemy : MonoBehaviour
         playerDontMoveCoroutine = null;
     }
 
-    private bool CastObstacleDetectionRay(Vector3 moveDirection)
+    private bool CastObstacleDetectionRay(Vector3 moveDirection, float rayLength = 2f)
     {
         Vector2 reyDirection = new Vector2(moveDirection.normalized.x, 0);
-        RaycastHit2D detectObstacles = Physics2D.Raycast(transform.position, reyDirection.normalized, 2f, rayCastLayer);
-        Debug.DrawRay(transform.position, reyDirection.normalized * 2, Color.green);
+        RaycastHit2D detectObstacles = Physics2D.Raycast(transform.position, reyDirection.normalized, rayLength, rayCastLayer);
+        Debug.DrawRay(transform.position, reyDirection.normalized * rayLength, Color.green);
         if(detectObstacles.transform != null) 
         {
             return true;
@@ -101,7 +107,7 @@ public class AICircleEnemy : MonoBehaviour
             {
                 if (playerDontMoveCoroutine == null)
                 {
-                    playerDontMoveCoroutine = StartCoroutine(OneSecDelayBeforeAttackPrep());
+                    playerDontMoveCoroutine = StartCoroutine(OneSecDelayBeforeAttack());
                 }
             }
 

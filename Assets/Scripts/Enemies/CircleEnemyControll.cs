@@ -111,8 +111,6 @@ public class CircleEnemyControll : BaseEnemy
 
     public void DistanceAttack(Vector3 destination)
     {
-        SetAttackPreparationState(false);
-
         isInAttack = true;
 
         Vector3 direction = destination - gameObject.transform.position;
