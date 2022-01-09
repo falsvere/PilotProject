@@ -31,10 +31,9 @@ public class AICircleEnemy : MonoBehaviour
     {
         if (!cirlceControll.isKnocked)
         {
-
             isPlayerInAttackArea();
             Vector3 moveDirection = player.transform.position - transform.position;
-            cirlceControll.Move(moveDirection);
+            cirlceControll.Move(player.transform.position);
 
             if (CastObstacleDetectionRay(moveDirection))
             {
@@ -80,7 +79,7 @@ public class AICircleEnemy : MonoBehaviour
             Vector3 playerPreviousPosition = player.transform.position;
             bool isPlayerMoveAlot = false;
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(3);
 
             Vector3 playerNewPosition = player.transform.position;
             float xDifference = Mathf.Max(playerPreviousPosition.x, playerNewPosition.x) - Mathf.Min(playerPreviousPosition.x, playerNewPosition.x);

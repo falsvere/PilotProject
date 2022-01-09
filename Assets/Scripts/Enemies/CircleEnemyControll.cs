@@ -54,11 +54,22 @@ public class CircleEnemyControll : BaseEnemy
 
     public override void Move(Vector3 targetPosition)
     {
+        Vector3 moveDirection = targetPosition - transform.position;
+
+        bool isPlayerRightAbove = Mathf.Abs(Mathf.Abs(targetPosition.x) - Mathf.Abs(transform.position.x)) < 0.7f;
+        bool isPlayerHigh = targetPosition.y > 0f;
+
+        if (isPlayerRightAbove && isPlayerHigh)
+        {
+            circleRB.velocity *= 0;
+            return;
+        }
+
         if (!isPreparingForAttack && !isInAttack)
         {
             float maxVelocity = maxVelocityGetter;
 
-            Vector2 force = new Vector2(targetPosition.normalized.x, 0);
+            Vector2 force = new Vector2(moveDirection.normalized.x, 0);
 
             if (circleRB.velocity.x <= maxVelocity && circleRB.velocity.x >= -maxVelocity)
             {
@@ -120,6 +131,8 @@ public class CircleEnemyControll : BaseEnemy
             circleRB.velocity *= 0f;
             circleRB.AddForce(-forceDirection.normalized * bounceForceOnPlayerCollision, ForceMode2D.Impulse);
         }
+
+        isPreparingForAttack = false;
         playerRB.velocity *= 0f;
         playerRB.AddForce(forceDirection.normalized * bounceForceOnPlayerCollision, ForceMode2D.Impulse);
 

@@ -1377,38 +1377,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
-      propertyPath: speed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
-      propertyPath: jumpForce
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
-      propertyPath: knockTime
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
-      propertyPath: clashDamage
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
-      propertyPath: maxVelocity
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
-      propertyPath: attackDamage
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
-      propertyPath: distanceAttackForce
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 8957810506302323014, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
-      propertyPath: bounceForceOnPlayerCollision
-      value: 80
-      objectReference: {fileID: 0}
     - target: {fileID: 8957810506302323015, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1456,10 +1424,6 @@ PrefabInstance:
     - target: {fileID: 8957810506302323131, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
       propertyPath: m_Name
       value: CircleEnemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 8957810506302323131, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 703c2ec18cd0d5d4583f06b8d20e579f, type: 3}
