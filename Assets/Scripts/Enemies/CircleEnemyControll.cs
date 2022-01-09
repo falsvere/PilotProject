@@ -89,7 +89,7 @@ public class CircleEnemyControll : BaseEnemy
     {
         if (isOnFloor && !isPreparingForAttack && !isInAttack)
         {
-            circleRB.velocity *= 0.7f;
+            circleRB.velocity *= 0.5f;
             circleRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); ;
         }
     }
