@@ -8,6 +8,7 @@ public class CircleEnemyControll : BaseEnemy
         private bool isOnFloor = false;
         private bool isInAttack = false;
         private bool isPreparingForAttack = false;
+        public bool isKnocked = false;
     //states end
 
     private Rigidbody2D circleRB;
@@ -15,6 +16,7 @@ public class CircleEnemyControll : BaseEnemy
     [SerializeField] float jumpForce;
     [SerializeField] float distanceAttackForce;
     [SerializeField] float bounceForceOnPlayerCollision;
+    [SerializeField] int knockTime;
 
     private SpriteRenderer circleSprite;
 
@@ -27,13 +29,50 @@ public class CircleEnemyControll : BaseEnemy
         circleSprite = gameObject.GetComponent<SpriteRenderer>();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject collisionGameobject = collision.gameObject;
+
+        if (collisionGameobject.CompareTag("Floor"))
+        {
+            isInAttack = false;
+            isOnFloor = true;
+        }
+        else if (collisionGameobject.CompareTag("Player") && !isKnocked)
+        {
+            PlayerCollisionHandler(collisionGameobject);
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            isOnFloor = false;
+        }
+    }
+
     public override void Move(Vector3 targetPosition)
     {
+        Vector3 moveDirection = targetPosition - transform.position;
+
+        bool isPlayerRightAbove = Mathf.Abs(Mathf.Abs(targetPosition.x) - Mathf.Abs(transform.position.x)) < 0.7f;
+        bool isPlayerHigh = targetPosition.y > 0f;
+
+        if (isPlayerRightAbove && isPlayerHigh)
+        {
+            if(!isInAttack)
+            {
+                circleRB.velocity *= 0;
+            }
+            return;
+        }
+
         if (!isPreparingForAttack && !isInAttack)
         {
             float maxVelocity = maxVelocityGetter;
 
-            Vector2 force = new Vector2(targetPosition.normalized.x, 0);
+            Vector2 force = new Vector2(moveDirection.normalized.x, 0);
 
             if (circleRB.velocity.x <= maxVelocity && circleRB.velocity.x >= -maxVelocity)
             {
@@ -50,7 +89,7 @@ public class CircleEnemyControll : BaseEnemy
     {
         if (isOnFloor && !isPreparingForAttack && !isInAttack)
         {
-            circleRB.velocity *= 0.7f;
+            circleRB.velocity *= 0.5f;
             circleRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); ;
         }
     }
@@ -72,8 +111,6 @@ public class CircleEnemyControll : BaseEnemy
 
     public void DistanceAttack(Vector3 destination)
     {
-        SetAttackPreparationState(false);
-
         isInAttack = true;
 
         Vector3 direction = destination - gameObject.transform.position;
@@ -81,29 +118,37 @@ public class CircleEnemyControll : BaseEnemy
         circleRB.AddForce(direction.normalized * distanceAttackForce, ForceMode2D.Impulse);
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void PlayerCollisionHandler(GameObject playerGameobject)
     {
-        if(collision.gameObject.CompareTag("Floor"))
+        Rigidbody2D playerRB = playerGameobject.GetComponent<Rigidbody2D>();
+        Vector3 forceDirection = playerGameobject.transform.position - transform.position;
+        playerRB.velocity *= 0f;
+        circleRB.velocity *= 0f;
+
+        if (isInAttack)
         {
-            isOnFloor = false;
+            DealAttack(playerGameobject);
+            playerRB.AddForce(forceDirection.normalized * bounceForceOnPlayerCollision * 3, ForceMode2D.Impulse);
+        } else
+        {
+            Deal—lash(playerGameobject);
+            circleRB.AddForce(-forceDirection.normalized * bounceForceOnPlayerCollision, ForceMode2D.Impulse);
+            playerRB.AddForce(forceDirection.normalized * bounceForceOnPlayerCollision * 2, ForceMode2D.Impulse);
         }
+
+        isPreparingForAttack = false;
+
+        isKnocked = true;
+        circleSprite.color = new Color32(0, 0, 0, 255);
+        StartCoroutine(AwakeAfterKnock());
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private IEnumerator AwakeAfterKnock()
     {
-        GameObject collisionGameobject = collision.gameObject;
+        yield return new WaitForSeconds(knockTime);
 
-        if (collisionGameobject.CompareTag("Floor"))
-        {
-            isInAttack = false;
-            isOnFloor = true;
-        } else if (collisionGameobject.CompareTag("Player"))
-        {
-            Rigidbody2D playerRB = collisionGameobject.GetComponent<Rigidbody2D>();
-            Vector3 forceDirection = collisionGameobject.transform.position - transform.position;
-            circleRB.velocity *= 0f;
-            circleRB.AddForce(-forceDirection.normalized * bounceForceOnPlayerCollision, ForceMode2D.Impulse);
-            playerRB.AddForce(forceDirection.normalized * bounceForceOnPlayerCollision, ForceMode2D.Impulse);
-        }
+        circleSprite.color = new Color32(238, 6, 6, 255);
+
+        isKnocked = false;
     }
 }

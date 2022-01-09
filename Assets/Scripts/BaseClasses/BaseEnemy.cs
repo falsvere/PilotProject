@@ -8,7 +8,10 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
 
     [SerializeField] private float speed;
     [SerializeField] private float maxVelocity;
+    [SerializeField] private int clashDamage;
+    [SerializeField] private int attackDamage;
     private int moveDirection = 0;
+    private PlayerControll playerControll;
 
     public float maxVelocityGetter
     {
@@ -61,6 +64,26 @@ public abstract class BaseEnemy : MonoBehaviour, IHaveHealth, IMovable
         {
             Debug.Log(health);
         }
+    }
+
+    public void  DealAttack(GameObject playerGameobject)
+    {
+        if(playerControll == null)
+        {
+            playerControll = playerGameobject.GetComponent<PlayerControll>();
+        }
+
+        playerControll.TakeDamage(attackDamage);
+    }
+
+    public void Deal—lash(GameObject playerGameobject)
+    {
+        if (playerControll == null)
+        {
+            playerControll = playerGameobject.GetComponent<PlayerControll>();
+        }
+
+        playerControll.TakeDamage(clashDamage);
     }
 
 }
