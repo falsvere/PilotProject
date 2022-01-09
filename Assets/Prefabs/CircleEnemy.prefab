@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49b8c5645a572f4da1f7d58ce5e033f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 5
   maxVelocity: 8
   clashDamage: 15
   attackDamage: 50
