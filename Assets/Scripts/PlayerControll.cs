@@ -43,6 +43,7 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
 
         GameObject bullet = Instantiate(bulletPF, bulletPosition, bulletRotation);
         PlayerBuletControl bulletScript = bullet.GetComponent<PlayerBuletControl>();
+        bulletScript.shooterSetter = gameObject;
         Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
 
         bulletRB.AddForce(direction * bulletScript.speedSetter, ForceMode2D.Impulse);

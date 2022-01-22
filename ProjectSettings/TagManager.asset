@@ -21,8 +21,8 @@ TagManager:
   - PlatformChildrens
   - Enemies
   - IgnorePlayer
-  - 
-  - 
+  - Enviroment
+  - OnlyEnviromentCollision
   - 
   - 
   - 
