@@ -20,11 +20,6 @@ public class AITriangleEnemy : MonoBehaviour
     private void FixedUpdate()
     {
         CheckRange(player.transform.position);
-        //ShootWhilePlayerInRange();
-/*        if(triangleEnemyControll.isOnFloorGetter)
-        {
-            triangleEnemyControll.Move(player.transform.position);
-        }*/
     }
 
     private void CheckRange(Vector2 targetPosition)

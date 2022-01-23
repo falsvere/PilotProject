@@ -9,6 +9,7 @@ public class TriangleEnemyControll : BaseEnemy
     [SerializeField] GameObject bulletPF;
     [SerializeField] float bulletTorque;
     [SerializeField] int baseHealth;
+    [SerializeField] Collider2D barierCollider;
 
     public bool isOnFloorGetter {
         get
@@ -59,6 +60,10 @@ public class TriangleEnemyControll : BaseEnemy
         TriangleBulletControl bulletScript = bullet.GetComponent<TriangleBulletControl>();
         bulletScript.shooterSetter = gameObject;
         Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
+
+        Collider2D buletCollider = bullet.GetComponent<Collider2D>();
+
+        Physics2D.IgnoreCollision(buletCollider, barierCollider, true);
 
         bulletRB.AddForce(direction * bulletScript.speedSetter, ForceMode2D.Impulse);
         bulletRB.AddTorque(bulletTorque);

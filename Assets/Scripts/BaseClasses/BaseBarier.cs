@@ -21,6 +21,18 @@ public abstract class BaseBarier : MonoBehaviour, IBarierBehavour
             baseColor = value;
         }
     }
+
+    public SpriteRenderer _barierSprite
+    {
+        get
+        {
+            return barierSprite;
+        }
+        set
+        {
+            barierSprite = value;
+        }
+    }
     void Update()
     {
         
