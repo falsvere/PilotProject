@@ -40,11 +40,18 @@ public abstract class BaseBullet : MonoBehaviour
     // methods
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject != shooter)
-        {
-            IHaveHealth healthInterface = collision.gameObject.GetComponent<IHaveHealth>();
+        GameObject collisionGameObject = collision.gameObject;
 
-            if (healthInterface != null && collision.gameObject != shooter)
+        if(collisionGameObject.CompareTag("Barier"))
+        {
+            Debug.Log('a');
+            Destroy(gameObject);
+            collisionGameObject.GetComponent<IBarierBehavour>().ChangeColorOnHit();
+        } else if(collisionGameObject != shooter && !collisionGameObject.CompareTag("Bullet"))
+        {
+            IHaveHealth healthInterface = collisionGameObject.GetComponent<IHaveHealth>();
+
+            if (healthInterface != null && collisionGameObject != shooter)
             {
                 healthInterface.TakeDamage(damage);
             }

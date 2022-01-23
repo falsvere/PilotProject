@@ -19,19 +19,35 @@ public class AITriangleEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(IsInRange(player.transform.position, attackDistance) && Time.time - previousShootTime >= timeGapBetweenShoots)
-        {
-            triangleEnemyControll.Shoot(player.transform.position);
-            previousShootTime = Time.time;
-        }
+        CheckRange(player.transform.position);
+        //ShootWhilePlayerInRange();
 /*        if(triangleEnemyControll.isOnFloorGetter)
         {
             triangleEnemyControll.Move(player.transform.position);
         }*/
     }
 
-    private bool IsInRange(Vector2 targetPosition, int range)
+    private void CheckRange(Vector2 targetPosition)
     {
-        return Vector2.Distance(transform.position, targetPosition) <= range;
+        float distance = Vector2.Distance(transform.position, targetPosition);
+
+        if(distance <= attackDistance)
+        {
+            ShootWhilePlayerInRange();
+        }
+
+        if(distance <= retreatDistance && triangleEnemyControll.isOnFloorGetter)
+        {
+            triangleEnemyControll.Move(player.transform.position);
+        }
+    }
+
+    private void ShootWhilePlayerInRange()
+    {
+        if (Time.time - previousShootTime >= timeGapBetweenShoots)
+        {
+            triangleEnemyControll.Shoot(player.transform.position);
+            previousShootTime = Time.time;
+        }
     }
 }

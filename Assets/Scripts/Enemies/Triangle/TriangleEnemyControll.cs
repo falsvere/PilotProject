@@ -7,6 +7,8 @@ public class TriangleEnemyControll : BaseEnemy
     Rigidbody2D triangleRB;
     private bool isOnFloor = false;
     [SerializeField] GameObject bulletPF;
+    [SerializeField] float bulletTorque;
+    [SerializeField] int baseHealth;
 
     public bool isOnFloorGetter {
         get
@@ -18,7 +20,7 @@ public class TriangleEnemyControll : BaseEnemy
     void Start()
     {
         triangleRB = GetComponent<Rigidbody2D>();
-        InitHealth(50);
+        InitHealth(baseHealth);
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -40,7 +42,7 @@ public class TriangleEnemyControll : BaseEnemy
 
     public override void Move(Vector3 targetPosition)
     {
-        int torgueModule = transform.position.x > targetPosition.x ? 1 : -1;
+        int torgueModule = transform.position.x > targetPosition.x ? -1 : 1;
 
         if (triangleRB.angularVelocity < maxVelocityGetter )
         {
@@ -59,5 +61,6 @@ public class TriangleEnemyControll : BaseEnemy
         Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
 
         bulletRB.AddForce(direction * bulletScript.speedSetter, ForceMode2D.Impulse);
+        bulletRB.AddTorque(bulletTorque);
     }
 }
