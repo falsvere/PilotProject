@@ -6,8 +6,10 @@ public class TriangleBarierControll : BaseBarier
 {
     [SerializeField] private GameObject triangle;
     [SerializeField] private float timeForColorToChangeOnCollWithPlayer;
+    [SerializeField] private float recoverTime;
     [SerializeField] private Color finalColorOnBarierDestroy;
-    [SerializeField] private Color transparentRed;
+    private Color transparentRed;
+    private Color transparentBaseColor;
     private float yDifference = 0.320f;
     private Coroutine destroyBarierCor;
     private Collider2D barierCollider;
@@ -16,6 +18,7 @@ public class TriangleBarierControll : BaseBarier
     {
         barierCollider = GetComponent<Collider2D>();
         transparentRed = new Color(finalColorOnBarierDestroy.r, finalColorOnBarierDestroy.g, finalColorOnBarierDestroy.b, 0f);
+        transparentBaseColor = new Color(_baseColor.r, _baseColor.g, _baseColor.b, 0f);
     }
 
     void LateUpdate()
@@ -37,6 +40,7 @@ public class TriangleBarierControll : BaseBarier
     private IEnumerator DestroyBarier()
     {
         float startTime = Time.time;
+        int colorRecoverStepsAmount = 5;
 
         for(int i = 1; Time.time < startTime + timeForColorToChangeOnCollWithPlayer; i++)
         {
@@ -45,8 +49,16 @@ public class TriangleBarierControll : BaseBarier
         }
 
         _barierSprite.color = transparentRed;
-
         barierCollider.enabled = false;
+
+        yield return new WaitForSeconds(recoverTime);
+
+        for (int i = 1; i <= colorRecoverStepsAmount; i++)
+        {
+            _barierSprite.color = Color.Lerp(transparentBaseColor, _baseColor, i * 0.2f);
+            yield return new WaitForSeconds(0.1f);
+        }
+        barierCollider.enabled = true;
         destroyBarierCor = null;
     }
 

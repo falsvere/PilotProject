@@ -10,7 +10,7 @@ public class TriangleEnemyControll : BaseEnemy
     [SerializeField] float bulletTorque;
     [SerializeField] int baseHealth;
     [SerializeField] Collider2D barierCollider;
-
+    private LayerMask rayCastLayers;
     public bool isOnFloorGetter {
         get
         {
@@ -22,6 +22,7 @@ public class TriangleEnemyControll : BaseEnemy
     {
         triangleRB = GetComponent<Rigidbody2D>();
         InitHealth(baseHealth);
+        rayCastLayers = LayerMask.GetMask("Enviroment", "Enemies");
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -43,12 +44,33 @@ public class TriangleEnemyControll : BaseEnemy
 
     public override void Move(Vector3 targetPosition)
     {
-        int torgueModule = transform.position.x > targetPosition.x ? -1 : 1;
+        float rayLength = 2f;
+        int moveModule = transform.position.x > targetPosition.x ? -1 : 1;
+        string obstacleTag = DetectObstacles(moveModule, rayLength, rayCastLayers);
+
+        Debug.Log(obstacleTag);
+
+        if (obstacleTag.Contains("Border"))
+        {
+            return;
+        }
 
         if (triangleRB.angularVelocity < maxVelocityGetter )
         {
-            triangleRB.AddTorque(speedSetter * torgueModule);
+            triangleRB.AddTorque(speedSetter * moveModule);
         }
+    }
+
+    public string DetectObstacles(int moveModule, float rayLength, LayerMask layerMask )
+    {
+        RaycastHit2D detectObstacles = Physics2D.Raycast(transform.position + (new Vector3(-0.7f, 0) * moveModule), Vector2.left * moveModule, rayLength, layerMask); ;
+        if(detectObstacles.transform == null )
+        {
+            return "";
+        }
+        Debug.Log(detectObstacles.transform.gameObject.name);
+        Debug.DrawRay(transform.position + (new Vector3(-0.7f, 0) * moveModule), Vector2.left * moveModule  * rayLength, Color.green);
+        return detectObstacles.transform.gameObject.tag;
     }
 
     public void Shoot(Vector3 destination)

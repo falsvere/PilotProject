@@ -148,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 25429355}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.99, y: -4.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -305,6 +305,7 @@ MonoBehaviour:
   timeBeforeBackToBaseColorOnHit: 0.1
   triangle: {fileID: 558391932}
   timeForColorToChangeOnCollWithPlayer: 0.5
+  recoverTime: 2
   finalColorOnBarierDestroy: {r: 1, g: 0, b: 0.10779095, a: 1}
 --- !u!60 &92597078
 PolygonCollider2D:
@@ -393,7 +394,7 @@ GameObject:
   - component: {fileID: 98626078}
   m_Layer: 0
   m_Name: TriangleEnemyAndBarierWrapper
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -406,7 +407,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 98626077}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.0997033, y: 1.3303634, z: -11.473278}
+  m_LocalPosition: {x: -2.5, y: -2.58, z: -11.473278}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 558391938}
