@@ -5,12 +5,17 @@ using UnityEngine;
 public class TriangleEnemyControll : BaseEnemy
 {
     Rigidbody2D triangleRB;
-    private bool isOnFloor = false;
+    [SerializeField] private bool isOnFloor = false;
+    private LayerMask rayCastLayers;
+    [SerializeField] float forceInJump;
     [SerializeField] GameObject bulletPF;
     [SerializeField] float bulletTorque;
+    [SerializeField] float jumpForce;
+    [SerializeField] float avoidJumpDelay;
     [SerializeField] int baseHealth;
     [SerializeField] Collider2D barierCollider;
-    private LayerMask rayCastLayers;
+
+    private float previousAvoidJumpTime = 0f;
     public bool isOnFloorGetter {
         get
         {
@@ -20,6 +25,7 @@ public class TriangleEnemyControll : BaseEnemy
 
     void Start()
     {
+        previousAvoidJumpTime = Time.time;
         triangleRB = GetComponent<Rigidbody2D>();
         InitHealth(baseHealth);
         rayCastLayers = LayerMask.GetMask("Enviroment", "Enemies");
@@ -44,15 +50,27 @@ public class TriangleEnemyControll : BaseEnemy
 
     public override void Move(Vector3 targetPosition)
     {
-        float rayLength = 2f;
+        float rayForwardLength = 2f;
+        float rayBackwardLength = 4f;
         int moveModule = transform.position.x > targetPosition.x ? -1 : 1;
-        string obstacleTag = DetectObstacles(moveModule, rayLength, rayCastLayers);
+        string obstacleForwardTag = DetectObstacles(moveModule, rayForwardLength, rayCastLayers);
+        string obstacleBackwardTag = DetectObstacles(-moveModule, rayBackwardLength, LayerMask.GetMask("Player"));
 
-        Debug.Log(obstacleTag);
+        if(obstacleBackwardTag == "Player" && Time.time - previousAvoidJumpTime >= avoidJumpDelay)
+        {
+            Jump();
+            previousAvoidJumpTime = Time.time;
+        }
 
-        if (obstacleTag.Contains("Border"))
+        if (obstacleForwardTag.Contains("Border"))
         {
             return;
+        }
+
+        if(obstacleForwardTag.Contains("Enemy"))
+        {
+            Jump();
+            triangleRB.AddForce(Vector2.left * moveModule * forceInJump, ForceMode2D.Impulse);
         }
 
         if (triangleRB.angularVelocity < maxVelocityGetter )
@@ -61,7 +79,17 @@ public class TriangleEnemyControll : BaseEnemy
         }
     }
 
-    public string DetectObstacles(int moveModule, float rayLength, LayerMask layerMask )
+    public void Jump()
+    {
+        if (isOnFloor)
+        {
+            triangleRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+
+        isOnFloor = false;
+    }
+
+    public string DetectObstacles(int moveModule, float rayLength, LayerMask layerMask)
     {
         RaycastHit2D detectObstacles = Physics2D.Raycast(transform.position + (new Vector3(-0.7f, 0) * moveModule), Vector2.left * moveModule, rayLength, layerMask); ;
         if(detectObstacles.transform == null )
