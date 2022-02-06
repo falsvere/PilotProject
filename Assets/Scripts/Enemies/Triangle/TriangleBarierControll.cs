@@ -10,7 +10,7 @@ public class TriangleBarierControll : BaseBarier
     [SerializeField] private Color finalColorOnBarierDestroy;
     private Color transparentRed;
     private Color transparentBaseColor;
-    private float yDifference = 0.320f;
+    private float yDifference = 0.3f;
     private Coroutine destroyBarierCor;
     private Collider2D barierCollider;
 
@@ -21,7 +21,7 @@ public class TriangleBarierControll : BaseBarier
         transparentBaseColor = new Color(_baseColor.r, _baseColor.g, _baseColor.b, 0f);
     }
 
-    void LateUpdate()
+    void Update()
     {
         UpdateBarierPosition();
     }

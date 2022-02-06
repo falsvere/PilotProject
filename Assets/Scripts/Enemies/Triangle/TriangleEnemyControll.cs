@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class TriangleEnemyControll : BaseEnemy
 {
-    Rigidbody2D triangleRB;
+    public Rigidbody2D triangleRB;
     [SerializeField] private bool isOnFloor = false;
-    private LayerMask rayCastLayers;
-    [SerializeField] float forceInJump;
-    [SerializeField] GameObject bulletPF;
-    [SerializeField] float bulletTorque;
-    [SerializeField] float jumpForce;
-    [SerializeField] float avoidJumpDelay;
-    [SerializeField] int baseHealth;
-    [SerializeField] Collider2D barierCollider;
-
-    private float previousAvoidJumpTime = 0f;
+    [SerializeField] private GameObject bulletPF;
+    [SerializeField] private float bulletTorque;
+    [SerializeField] private float jumpForce;
+    [SerializeField] private int baseHealth;
+    [SerializeField] private Collider2D barierCollider;
+    [SerializeField] private GameObject wrapper;
+    private float spawnXPoint = -100000;
+    private bool isInJump;
     public bool isOnFloorGetter {
         get
         {
@@ -25,10 +23,8 @@ public class TriangleEnemyControll : BaseEnemy
 
     void Start()
     {
-        previousAvoidJumpTime = Time.time;
         triangleRB = GetComponent<Rigidbody2D>();
         InitHealth(baseHealth);
-        rayCastLayers = LayerMask.GetMask("Enviroment", "Enemies");
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -42,36 +38,29 @@ public class TriangleEnemyControll : BaseEnemy
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Floor"))
+        if (collision.gameObject.CompareTag("Floor") || collision.gameObject.CompareTag("Platform"))
         {
-            isOnFloor = true;
+            if(collision.gameObject.transform.position.y < transform.position.y)
+            {
+                isOnFloor = true;
+                isInJump = false;
+            }
+
+            if(spawnXPoint == -100000f)
+            {
+                spawnXPoint = transform.position.x;
+            }
         }
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(wrapper);
     }
 
     public override void Move(Vector3 targetPosition)
     {
-        float rayForwardLength = 2f;
-        float rayBackwardLength = 4f;
         int moveModule = transform.position.x > targetPosition.x ? -1 : 1;
-        string obstacleForwardTag = DetectObstacles(moveModule, rayForwardLength, rayCastLayers);
-        string obstacleBackwardTag = DetectObstacles(-moveModule, rayBackwardLength, LayerMask.GetMask("Player"));
-
-        if(obstacleBackwardTag == "Player" && Time.time - previousAvoidJumpTime >= avoidJumpDelay)
-        {
-            Jump();
-            previousAvoidJumpTime = Time.time;
-        }
-
-        if (obstacleForwardTag.Contains("Border"))
-        {
-            return;
-        }
-
-        if(obstacleForwardTag.Contains("Enemy"))
-        {
-            Jump();
-            triangleRB.AddForce(Vector2.left * moveModule * forceInJump, ForceMode2D.Impulse);
-        }
 
         if (triangleRB.angularVelocity < maxVelocityGetter )
         {
@@ -79,13 +68,25 @@ public class TriangleEnemyControll : BaseEnemy
         }
     }
 
+    public void ChasePlayer(Vector3 targetPosition)
+    {
+        int moveModule = transform.position.x > targetPosition.x ? 1 : -1;
+
+
+        if (triangleRB.angularVelocity < maxVelocityGetter)
+        {
+            triangleRB.AddTorque(speedSetter * moveModule);
+        }
+    }
+
     public void Jump()
     {
-        if (isOnFloor)
+        if (!isInJump)
         {
             triangleRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
+        isInJump = true;
         isOnFloor = false;
     }
 

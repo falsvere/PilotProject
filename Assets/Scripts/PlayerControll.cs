@@ -24,6 +24,8 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
     private float minAngularVelocity = 20f;
     private float onPlatformOutXVelocityDivider = 0.5f;
 
+    private int moveDirection;
+
     private int health;
 
     private bool isOnFloor = false;
@@ -52,7 +54,6 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
     public void TakeDamage(int damage)
     {
         health -= damage;
-        Debug.Log(health);
     }
 
     public void InitHealth(int healthPoints)
