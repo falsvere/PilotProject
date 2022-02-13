@@ -48,7 +48,7 @@ public class PlayerControll : MonoBehaviour, IHaveHealth, ICanShoot
         bulletScript.shooterSetter = gameObject;
         Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
 
-        bulletRB.AddForce(direction * bulletScript.speedSetter, ForceMode2D.Impulse);
+        bulletRB.AddForce(direction.normalized * bulletScript.speedSetter, ForceMode2D.Impulse);
     }
 
     public void TakeDamage(int damage)

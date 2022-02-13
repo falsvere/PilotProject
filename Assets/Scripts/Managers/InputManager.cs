@@ -15,6 +15,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetButtonUp("Horizontal"))
         {
             player.DropVelocityOnKeysUp();
+            GameManager.publicGameData.SetMovementDirection(0);
         }
     }
 
@@ -27,6 +28,7 @@ public class InputManager : MonoBehaviour
     private void HorizontalInputListeners()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
+        GameManager.publicGameData.SetMovementDirection((int)horizontalInput);
         player.MoveFunction(horizontalInput);
     }
 

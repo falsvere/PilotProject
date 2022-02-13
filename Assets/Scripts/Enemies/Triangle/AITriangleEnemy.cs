@@ -12,12 +12,17 @@ public class AITriangleEnemy : MonoBehaviour
     [SerializeField] float avoidJumpDelay;
     [SerializeField] float forceInJump;
     [SerializeField] float sideForceInAviodPlayer;
+    [SerializeField] private float moveRadius;
     private LayerMask rayCastLayers;
     private float previousShootTime;
     private float previousAvoidJumpTime = 0f;
+    private GameData gameData;
+    private float spawnXCoordinate;
 
     void Start()
     {
+        spawnXCoordinate = transform.position.x;
+        gameData = GameManager.publicGameData;
         player = GameObject.FindGameObjectWithTag("Player");
         triangleEnemyControll = GetComponent<TriangleEnemyControll>();
         previousShootTime = Time.time;
@@ -38,15 +43,27 @@ public class AITriangleEnemy : MonoBehaviour
     private void CheckRange(Vector2 targetPosition)
     {
         float distance = Vector2.Distance(transform.position, targetPosition);
+        float rayForwardLength = 1f;
+        int moveModule = transform.position.x > player.transform.position.x ? -1 : 1;
+        string obstacleForwardTag;
 
-        if(distance <= attackDistance)
+        if (distance <= attackDistance)
         {
             ShootWhilePlayerInRange();
         }
 
-        float rayForwardLength = 1f;
-        int moveModule = transform.position.x > player.transform.position.x ? -1 : 1;
-        string obstacleForwardTag = DetectObstacles(moveModule, rayForwardLength, rayCastLayers);
+        //ToDo доделать механику отклонения треугольника от точки спавна
+
+        if (distance > retreatDistance + 1.2f && (moveModule == gameData._playerMovementDirection || gameData._playerMovementDirection == 0))
+        {
+            if(triangleEnemyControll.isOnFloorGetter)
+            {
+                triangleEnemyControll.ChasePlayer(player.transform.position);
+            }
+            return;
+        }
+
+        obstacleForwardTag = DetectObstacles(moveModule, rayForwardLength, rayCastLayers);
 
         if (obstacleForwardTag.Contains("Border"))
         {
@@ -59,10 +76,8 @@ public class AITriangleEnemy : MonoBehaviour
             triangleEnemyControll.triangleRB.AddForce(Vector2.left * moveModule * forceInJump, ForceMode2D.Impulse);
         }
 
-
         if (distance <= retreatDistance && triangleEnemyControll.isOnFloorGetter)
         {
-            Debug.Log('s');
             triangleEnemyControll.Move(player.transform.position);
         } 
     }
@@ -94,10 +109,9 @@ public class AITriangleEnemy : MonoBehaviour
         int moveModule = transform.position.x > player.transform.position.x ? -1 : 1;
         string obstacleBackwardTag = DetectObstacles(-moveModule, rayBackwardLength, LayerMask.GetMask("Player"));
 
-        if (obstacleBackwardTag == "Player" && Time.time - previousAvoidJumpTime >= avoidJumpDelay)
+        if (obstacleBackwardTag == "Player" && Time.time - previousAvoidJumpTime >= avoidJumpDelay && gameData._playerMovementDirection != 0f)
         {
             triangleEnemyControll.triangleRB.velocity *= 0f;
-            Debug.Log("Jump" + triangleEnemyControll.isOnFloorGetter);
             triangleEnemyControll.Jump();
             triangleEnemyControll.triangleRB.AddForce(Vector2.right * sideForceInAviodPlayer * moveModule, ForceMode2D.Impulse);
             previousAvoidJumpTime = Time.time;

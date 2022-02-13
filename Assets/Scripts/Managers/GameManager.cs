@@ -5,14 +5,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    void Start()
+    public static GameData publicGameData;
+    void Awake()
     {
-        
+        publicGameData = new GameData();
+    }
+}
+
+public class GameData
+{
+    private int playerMovementDirection = 0;
+    public int _playerMovementDirection
+    {
+        get
+        {
+            return playerMovementDirection;
+        }
     }
 
-
-    void Update()
+    public void SetMovementDirection(int direction)
     {
-        
+        playerMovementDirection = direction;
     }
 }

@@ -32,7 +32,10 @@ public class TriangleEnemyControll : BaseEnemy
         if (collision.gameObject.CompareTag("Floor"))
         {
             isOnFloor = false;
-            triangleRB.AddForce(Vector2.down * 60f, ForceMode2D.Impulse);
+            if(!isInJump)
+            {
+                triangleRB.AddForce(Vector2.down * 60f, ForceMode2D.Impulse);
+            }
         }
     }
 
@@ -62,7 +65,7 @@ public class TriangleEnemyControll : BaseEnemy
     {
         int moveModule = transform.position.x > targetPosition.x ? -1 : 1;
 
-        if (triangleRB.angularVelocity < maxVelocityGetter )
+        if (Mathf.Abs(triangleRB.angularVelocity) < maxVelocityGetter && isOnFloor)
         {
             triangleRB.AddTorque(speedSetter * moveModule);
         }
@@ -73,7 +76,7 @@ public class TriangleEnemyControll : BaseEnemy
         int moveModule = transform.position.x > targetPosition.x ? 1 : -1;
 
 
-        if (triangleRB.angularVelocity < maxVelocityGetter)
+        if (Mathf.Abs(triangleRB.angularVelocity) < maxVelocityGetter && isOnFloor)
         {
             triangleRB.AddTorque(speedSetter * moveModule);
         }
@@ -83,6 +86,7 @@ public class TriangleEnemyControll : BaseEnemy
     {
         if (!isInJump)
         {
+            Debug.Log("Jumped");
             triangleRB.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
