@@ -32,7 +32,7 @@ public class AITriangleEnemy : MonoBehaviour
 
     private void Update()
     {
-        AvoidPlayer();
+        JumpOnPlayerGetsClose();
     }
 
     private void FixedUpdate()
@@ -112,7 +112,7 @@ public class AITriangleEnemy : MonoBehaviour
         return detectObstacles.transform.gameObject.tag;
     }
 
-    private void AvoidPlayer()
+    private void JumpOnPlayerGetsClose()
     {
         float rayBackwardLength = 3.8f;
         int moveModule = transform.position.x > player.transform.position.x ? -1 : 1;
@@ -121,6 +121,7 @@ public class AITriangleEnemy : MonoBehaviour
         if (obstacleBackwardTag == "Player" && Time.time - previousAvoidJumpTime >= avoidJumpDelay && gameData._playerMovementDirection != 0f)
         {
             triangleEnemyControll.triangleRB.velocity *= 0f;
+            triangleEnemyControll.triangleRB.angularVelocity *= 0f;
             triangleEnemyControll.Jump();
             triangleEnemyControll.triangleRB.AddForce(Vector2.right * sideForceInAviodPlayer * moveModule, ForceMode2D.Impulse);
             previousAvoidJumpTime = Time.time;
