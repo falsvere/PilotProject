@@ -75,7 +75,6 @@ public class TriangleEnemyControll : BaseEnemy
     {
         int moveModule = transform.position.x > targetPosition.x ? 1 : -1;
 
-
         if (Mathf.Abs(triangleRB.angularVelocity) < maxVelocityGetter && isOnFloor)
         {
             triangleRB.AddTorque(speedSetter * moveModule);

@@ -17,11 +17,11 @@ public class AITriangleEnemy : MonoBehaviour
     private float previousShootTime;
     private float previousAvoidJumpTime = 0f;
     private GameData gameData;
-    private float spawnXCoordinate;
+    private Vector2 spawnCoordinates;
 
     void Start()
     {
-        spawnXCoordinate = transform.position.x;
+        spawnCoordinates = transform.position;
         gameData = GameManager.publicGameData;
         player = GameObject.FindGameObjectWithTag("Player");
         triangleEnemyControll = GetComponent<TriangleEnemyControll>();
@@ -54,7 +54,9 @@ public class AITriangleEnemy : MonoBehaviour
 
         //ToDo доделать механику отклонения треугольника от точки спавна
 
-        if (distance > retreatDistance + 1.2f && (moveModule == gameData._playerMovementDirection || gameData._playerMovementDirection == 0))
+        float playerDistanceFromSpawnPoint = Vector2.Distance(targetPosition, spawnCoordinates);
+
+        if (distance > retreatDistance + 1.2f && playerDistanceFromSpawnPoint < moveRadius + attackDistance && (moveModule == gameData._playerMovementDirection || gameData._playerMovementDirection == 0))
         {
             if(triangleEnemyControll.isOnFloorGetter)
             {
@@ -79,7 +81,14 @@ public class AITriangleEnemy : MonoBehaviour
         if (distance <= retreatDistance && triangleEnemyControll.isOnFloorGetter)
         {
             triangleEnemyControll.Move(player.transform.position);
+            return;
         } 
+
+        if(playerDistanceFromSpawnPoint >= moveRadius + attackDistance && triangleEnemyControll.isOnFloorGetter && Vector2.Distance(transform.position, spawnCoordinates) > 1.7f)
+        {
+            Debug.Log("asds");
+            triangleEnemyControll.ChasePlayer(spawnCoordinates);
+        }
     }
 
     private void ShootWhilePlayerInRange()

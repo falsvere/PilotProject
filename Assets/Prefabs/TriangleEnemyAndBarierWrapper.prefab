@@ -265,6 +265,7 @@ MonoBehaviour:
   avoidJumpDelay: 3
   forceInJump: 2
   sideForceInAviodPlayer: 40
+  moveRadius: 15
 --- !u!114 &7769908720351785883
 MonoBehaviour:
   m_ObjectHideFlags: 0
