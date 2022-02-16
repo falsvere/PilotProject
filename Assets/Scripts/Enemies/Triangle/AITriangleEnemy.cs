@@ -18,12 +18,14 @@ public class AITriangleEnemy : MonoBehaviour
     private float previousAvoidJumpTime = 0f;
     private GameData gameData;
     private Vector2 spawnCoordinates;
+    private Rigidbody2D playerRB;
 
     void Start()
     {
         spawnCoordinates = transform.position;
         gameData = GameManager.publicGameData;
         player = GameObject.FindGameObjectWithTag("Player");
+        playerRB = player.GetComponent<Rigidbody2D>();
         triangleEnemyControll = GetComponent<TriangleEnemyControll>();
         previousShootTime = Time.time;
         previousAvoidJumpTime = Time.time;
@@ -49,10 +51,8 @@ public class AITriangleEnemy : MonoBehaviour
 
         if (distance <= attackDistance)
         {
-            ShootWhilePlayerInRange();
+            Shoot();
         }
-
-        //ToDo доделать механику отклонения треугольника от точки спавна
 
         float playerDistanceFromSpawnPoint = Vector2.Distance(targetPosition, spawnCoordinates);
 
@@ -91,7 +91,7 @@ public class AITriangleEnemy : MonoBehaviour
         }
     }
 
-    private void ShootWhilePlayerInRange()
+    private void Shoot()
     {
         if (Time.time - previousShootTime >= timeGapBetweenShoots)
         {
@@ -107,18 +107,22 @@ public class AITriangleEnemy : MonoBehaviour
         {
             return "";
         }
-        Debug.Log(detectObstacles.transform.gameObject.name);
-        Debug.DrawRay(transform.position + (new Vector3(-0.7f, 0) * moveModule), Vector2.left * moveModule * rayLength, Color.green);
+
         return detectObstacles.transform.gameObject.tag;
     }
 
     private void JumpOnPlayerGetsClose()
     {
-        float rayBackwardLength = 3.8f;
+        float playerVelocityDivider = 3.8f;
         int moveModule = transform.position.x > player.transform.position.x ? -1 : 1;
-        string obstacleBackwardTag = DetectObstacles(-moveModule, rayBackwardLength, LayerMask.GetMask("Player"));
+        RaycastHit2D detectPlayer = Physics2D.Raycast(transform.position, Vector2.right * moveModule, 10f, LayerMask.GetMask("Player"));
+ 
+        // distance to player in which triangle should jump calculates from player velocity, the slower player is - the shorter distanse gets 
+        bool isPlayerClose = detectPlayer.distance < Mathf.Abs(playerRB.velocity.x/playerVelocityDivider) && detectPlayer.collider != null;
+        bool triangleCanJump = Time.time - previousAvoidJumpTime >= avoidJumpDelay;
+        bool isPlayerMoves = gameData._playerMovementDirection != 0f;
 
-        if (obstacleBackwardTag == "Player" && Time.time - previousAvoidJumpTime >= avoidJumpDelay && gameData._playerMovementDirection != 0f)
+        if (isPlayerClose && triangleCanJump && isPlayerMoves)
         {
             triangleEnemyControll.triangleRB.velocity *= 0f;
             triangleEnemyControll.triangleRB.angularVelocity *= 0f;
