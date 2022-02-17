@@ -42,52 +42,66 @@ public class AITriangleEnemy : MonoBehaviour
         CheckRange(player.transform.position);
     }
 
+    private bool ObstaclesDetection()
+    {
+        float rayForwardLength = 1f;
+        int moveModule = (int)(triangleEnemyControll.triangleRB.angularVelocity / Mathf.Abs(triangleEnemyControll.triangleRB.angularVelocity));
+        Debug.Log(moveModule);
+        string obstacleForwardTag = DetectObstacles(moveModule, rayForwardLength, rayCastLayers);
+
+
+        if (obstacleForwardTag.Contains("Border"))
+        {
+            return true;
+        }
+
+        //ToDo deal with problem when triangle is very close to enemy and cant jump
+        if (obstacleForwardTag.Contains("Enemy"))
+        {
+            triangleEnemyControll.triangleRB.velocity *= 0f;
+            triangleEnemyControll.triangleRB.angularVelocity *= 0f;
+            triangleEnemyControll.Jump();
+            triangleEnemyControll.triangleRB.AddForce(Vector2.left * moveModule * forceInJump, ForceMode2D.Impulse);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void MovementsBehaivor(Vector2 targetPosition, float distance, int moveModule)
+    {
+        float playerDistanceFromSpawnPoint = Vector2.Distance(targetPosition, spawnCoordinates);
+
+
+        if (distance <= retreatDistance && triangleEnemyControll.isOnFloorGetter)
+        {
+            triangleEnemyControll.Move(player.transform.position);
+
+        } else if (distance > retreatDistance + 1.2f && playerDistanceFromSpawnPoint < moveRadius + attackDistance && (moveModule == gameData._playerMovementDirection || gameData._playerMovementDirection == 0))
+        {
+           triangleEnemyControll.GoToPosition(player.transform.position);
+        } else if (playerDistanceFromSpawnPoint >= moveRadius + attackDistance && triangleEnemyControll.isOnFloorGetter && Vector2.Distance(transform.position, spawnCoordinates) > 1.7f)
+        {
+           triangleEnemyControll.GoToPosition(spawnCoordinates);
+        }
+    }
+
     private void CheckRange(Vector2 targetPosition)
     {
         float distance = Vector2.Distance(transform.position, targetPosition);
-        float rayForwardLength = 1f;
         int moveModule = transform.position.x > player.transform.position.x ? -1 : 1;
-        string obstacleForwardTag;
 
         if (distance <= attackDistance)
         {
             Shoot();
         }
 
-        float playerDistanceFromSpawnPoint = Vector2.Distance(targetPosition, spawnCoordinates);
-
-        if (distance > retreatDistance + 1.2f && playerDistanceFromSpawnPoint < moveRadius + attackDistance && (moveModule == gameData._playerMovementDirection || gameData._playerMovementDirection == 0))
-        {
-            if(triangleEnemyControll.isOnFloorGetter)
-            {
-                triangleEnemyControll.ChasePlayer(player.transform.position);
-            }
-            return;
-        }
-
-        obstacleForwardTag = DetectObstacles(moveModule, rayForwardLength, rayCastLayers);
-
-        if (obstacleForwardTag.Contains("Border"))
+        if (ObstaclesDetection())
         {
             return;
-        }
-
-        if (obstacleForwardTag.Contains("Enemy"))
+        } else
         {
-            triangleEnemyControll.Jump();
-            triangleEnemyControll.triangleRB.AddForce(Vector2.left * moveModule * forceInJump, ForceMode2D.Impulse);
-        }
-
-        if (distance <= retreatDistance && triangleEnemyControll.isOnFloorGetter)
-        {
-            triangleEnemyControll.Move(player.transform.position);
-            return;
-        } 
-
-        if(playerDistanceFromSpawnPoint >= moveRadius + attackDistance && triangleEnemyControll.isOnFloorGetter && Vector2.Distance(transform.position, spawnCoordinates) > 1.7f)
-        {
-            Debug.Log("asds");
-            triangleEnemyControll.ChasePlayer(spawnCoordinates);
+            MovementsBehaivor(targetPosition, distance, moveModule);
         }
     }
 
@@ -102,7 +116,7 @@ public class AITriangleEnemy : MonoBehaviour
 
     public string DetectObstacles(int moveModule, float rayLength, LayerMask layerMask)
     {
-        RaycastHit2D detectObstacles = Physics2D.Raycast(transform.position + (new Vector3(-0.7f, 0) * moveModule), Vector2.left * moveModule, rayLength, layerMask); ;
+        RaycastHit2D detectObstacles = Physics2D.Raycast(transform.position + (new Vector3(-0.7f, 0) * moveModule), Vector2.left * moveModule, rayLength, layerMask);
         if (detectObstacles.transform == null)
         {
             return "";

@@ -71,7 +71,7 @@ public class TriangleEnemyControll : BaseEnemy
         }
     }
 
-    public void ChasePlayer(Vector3 targetPosition)
+    public void GoToPosition(Vector3 targetPosition)
     {
         int moveModule = transform.position.x > targetPosition.x ? 1 : -1;
 
