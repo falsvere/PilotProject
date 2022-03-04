@@ -460,7 +460,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7769908719742073850, guid: 15a2d25aed464ff428c91cefc9261c8a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.75
+      value: 11.06
       objectReference: {fileID: 0}
     - target: {fileID: 7769908719742073850, guid: 15a2d25aed464ff428c91cefc9261c8a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -504,7 +504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7769908720351785828, guid: 15a2d25aed464ff428c91cefc9261c8a, type: 3}
       propertyPath: forceInJump
-      value: 10
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7769908720351785828, guid: 15a2d25aed464ff428c91cefc9261c8a, type: 3}
       propertyPath: retreatDistance
@@ -516,7 +516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7769908720351785883, guid: 15a2d25aed464ff428c91cefc9261c8a, type: 3}
       propertyPath: jumpForce
-      value: 180
+      value: 140
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15a2d25aed464ff428c91cefc9261c8a, type: 3}
